@@ -7,8 +7,36 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+MainWindow * MainWindow::instanceUnique = 0;
+
+// Donne instance du Singleton.
+MainWindow & MainWindow::donneInstance()
+{
+    if (instanceUnique == 0)
+        instanceUnique = new MainWindow(0);
+    return * instanceUnique;
+}
+
+// Libere instance du Singleton.
+void MainWindow::libereInstance()
+{
+    if (instanceUnique != 0)
+            delete instanceUnique;
+    instanceUnique = 0;
+}
+
+// Destructeur.
+MainWindow::~MainWindow()
+{
+    if (instanceUnique != 0)
+    {
+        delete instanceUnique->ui;
+        delete instanceUnique;
+    }
+}
+
 // Constructeur.
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QWidget * parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
@@ -78,11 +106,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->buttonAnnuler,SIGNAL(clicked()),this,SLOT(annulerPressed()));
 }
 
-// Destructeur.
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
 
 // Appui sur le bouton SWAP.
 void MainWindow::swapPressed()

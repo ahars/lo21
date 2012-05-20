@@ -19,12 +19,19 @@ class MainWindow : public QMainWindow
     Q_OBJECT
     
 private:
+    static MainWindow * instanceUnique;
     Ui::MainWindow *ui;
     QString memoire;
 
+    MainWindow();
+    MainWindow(const MainWindow &);
+    explicit MainWindow(QWidget * parent = 0);
+    virtual ~MainWindow();
+    void operator=(const MainWindow &);
+
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    static MainWindow & donneInstance();
+    static void libereInstance();
 
 private slots:
     void num0Pressed();
