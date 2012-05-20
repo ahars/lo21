@@ -1,3 +1,9 @@
+/* UV: LO21 - projet
+ * Sujet: Calculatrice à notation polonaise inversée
+ * Auteurs: Jiahan & Antoine Hars
+ * File: mainwindow.h
+ */
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -39,8 +45,9 @@ private slots:
     void spacePressed();   // SPACE
     void about();          // information sur ce projet
     void entrerPressed();  // =
-    void clearPressed();   // Clear
+    void DollarPressed();  // $
     void retablirPressed();// retablir
+    void annulerPressed(); // annuler
     void factPressed();    // !
     void sinPressed();     // sin
     void cosPressed();     // cos

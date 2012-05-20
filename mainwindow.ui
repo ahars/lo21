@@ -312,9 +312,9 @@
       </widget>
      </item>
      <item row="6" column="7">
-      <widget class="QPushButton" name="buttonEVAL">
+      <widget class="QPushButton" name="buttonDollar">
        <property name="text">
-        <string>EVAL</string>
+        <string>$</string>
        </property>
       </widget>
      </item>
@@ -326,9 +326,9 @@
       </widget>
      </item>
      <item row="8" column="7">
-      <widget class="QPushButton" name="buttonCLEAR">
+      <widget class="QPushButton" name="buttonEVAL">
        <property name="text">
-        <string>C</string>
+        <string>EVAL</string>
        </property>
       </widget>
      </item>
@@ -498,7 +498,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonCLEAR</sender>
+   <sender>buttonEVAL</sender>
    <signal>clicked()</signal>
    <receiver>listWidget</receiver>
    <slot>clear()</slot>
