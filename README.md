@@ -1,4 +1,5 @@
 lo21_projet
 ===========
-
-calculatrice en polonaise inversée
+UV: LO21 - Projet
+Sujet: calculatrice en polonaise inversée
+Auteurs: Han Jia & Antoine Hars
