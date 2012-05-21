@@ -1,6 +1,6 @@
 /* UV: LO21 - projet
  * Sujet: Calculatrice à notation polonaise inversée
- * Auteurs: Jiahan & Antoine Hars
+ * Auteurs: Han Jia & Antoine Hars
  * File: mainwindow.cpp
  */
 
@@ -65,6 +65,9 @@ MainWindow::MainWindow(QWidget * parent) :
     ui->buttonAnnuler->setShortcut(QKeySequence(Qt::Key_Delete));
     ui->actionQuit->setShortcut(QKeySequence(Qt::Key_Escape));
     ui->buttonRetablir->setShortcut(QKeySequence(Qt::Key_Backspace));
+    ui->buttonAnnuler->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
+    ui->buttonClear->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_C));
+    ui->buttonRetablir->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y));
 
 
     // Connections.
@@ -80,7 +83,7 @@ MainWindow::MainWindow(QWidget * parent) :
     QObject::connect(ui->button9,SIGNAL(clicked()),this,SLOT(num9Pressed()));
 
     QObject::connect(ui->buttonPoint,SIGNAL(clicked()),this,SLOT(pointPressed()));
-    QObject::connect(ui->buttonDollar,SIGNAL(clicked()),this,SLOT(DollarPressed()));
+    QObject::connect(ui->buttonDollar,SIGNAL(clicked()),this,SLOT(dollarPressed()));
     QObject::connect(ui->buttonRetablir,SIGNAL(clicked()),this,SLOT(retablirPressed()));
     QObject::connect(ui->actionAbout,SIGNAL(triggered()),this,SLOT(about()));
     QObject::connect(ui->buttonPlus,SIGNAL(clicked()),this,SLOT(plusPressed()));
@@ -104,6 +107,7 @@ MainWindow::MainWindow(QWidget * parent) :
     QObject::connect(ui->buttonDROP,SIGNAL(clicked()),this,SLOT(dropPressed()));
     QObject::connect(ui->buttonDUP,SIGNAL(clicked()),this,SLOT(dupPressed()));
     QObject::connect(ui->buttonAnnuler,SIGNAL(clicked()),this,SLOT(annulerPressed()));
+    QObject::connect(ui->buttonClear,SIGNAL(clicked()),this,SLOT(clearPressed()));
 }
 
 
@@ -150,7 +154,7 @@ void MainWindow::spacePressed()
 }
 
 // Appui sur le bouton $.
-void MainWindow::DollarPressed()
+void MainWindow::dollarPressed()
 {
     ui->inputLine->setText(ui->inputLine->text()+"$");
 }
@@ -272,7 +276,7 @@ void MainWindow::factPressed()
 void MainWindow::about()
  {
     QMessageBox message;
-    message.setText("LO21_projet,ecrire par Han et Antoine");
+    message.setText("UV: LO21\nSujet: Calculatrice en notation polonaise inversee.\nAuteurs: Han Jia & Antoine Hars.");
     message.exec();
  }
 
@@ -330,4 +334,8 @@ void MainWindow::annulerPressed()
 
 }
 
+// Appui sur le bouton CLEAR.
+void MainWindow::clearPressed()
+{
 
+}

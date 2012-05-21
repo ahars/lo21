@@ -1,6 +1,6 @@
 /* UV: LO21 - projet
  * Sujet: Calculatrice à notation polonaise inversée
- * Auteurs: Jiahan & Antoine Hars
+ * Auteurs: Han Jia & Antoine Hars
  * File: mainwindow.h
  */
 
@@ -50,11 +50,12 @@ private slots:
     void multPressed();    // *
     void divPressed();     // /
     void spacePressed();   // SPACE
-    void about();          // information sur ce projet
+    void about();          // information sur ce projet.
     void entrerPressed();  // =
-    void DollarPressed();  // $
+    void dollarPressed();  // $
     void retablirPressed();// retablir
     void annulerPressed(); // annuler
+    void clearPressed();
     void factPressed();    // !
     void sinPressed();     // sin
     void cosPressed();     // cos
