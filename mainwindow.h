@@ -14,20 +14,22 @@ namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow//, public Operateur
 {
     Q_OBJECT
     
 private:
     static MainWindow * instanceUnique;
     Ui::MainWindow *ui;
-    QString memoire;
+    QString memoire;    // Pour la fonction rétablir.
 
     MainWindow();
     MainWindow(const MainWindow &);
     explicit MainWindow(QWidget * parent = 0);
     virtual ~MainWindow();
     void operator=(const MainWindow &);
+
+    int begin, end; // Début et Fin d'expression.
 
 public:
     static MainWindow & donneInstance();
@@ -55,7 +57,6 @@ private slots:
     void dollarPressed();  // $
     void retablirPressed();// retablir
     void annulerPressed(); // annuler
-    void clearPressed();
     void factPressed();    // !
     void sinPressed();     // sin
     void cosPressed();     // cos
@@ -70,6 +71,8 @@ private slots:
     void meanPressed();    // moyenne des x premiers éléments de la pile.
     void dupPressed();     // duplique le premier élément de la pile.
     void dropPressed();    // supprime le premier élément de la pile.
+    void radPressed();     // basculer en radian.
+    void degPressed();     // basculer en degrès.
 
 };
 

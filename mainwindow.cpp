@@ -66,7 +66,6 @@ MainWindow::MainWindow(QWidget * parent) :
     ui->actionQuit->setShortcut(QKeySequence(Qt::Key_Escape));
     ui->buttonRetablir->setShortcut(QKeySequence(Qt::Key_Backspace));
     ui->buttonAnnuler->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
-    ui->buttonClear->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_C));
     ui->buttonRetablir->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y));
 
 
@@ -107,7 +106,6 @@ MainWindow::MainWindow(QWidget * parent) :
     QObject::connect(ui->buttonDROP,SIGNAL(clicked()),this,SLOT(dropPressed()));
     QObject::connect(ui->buttonDUP,SIGNAL(clicked()),this,SLOT(dupPressed()));
     QObject::connect(ui->buttonAnnuler,SIGNAL(clicked()),this,SLOT(annulerPressed()));
-    QObject::connect(ui->buttonClear,SIGNAL(clicked()),this,SLOT(clearPressed()));
 }
 
 
@@ -334,8 +332,14 @@ void MainWindow::annulerPressed()
 
 }
 
-// Appui sur le bouton CLEAR.
-void MainWindow::clearPressed()
+// Basculer en mode Degrès.
+void MainWindow::degPressed()
+{
+
+}
+
+// Basculer en mode Radian.
+void MainWindow::radPressed()
 {
 
 }

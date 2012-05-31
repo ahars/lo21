@@ -6,6 +6,7 @@
 
 #include <QtGui/QApplication>
 #include "mainwindow.h"
+#include "pile.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,7 +14,6 @@ int main(int argc, char *argv[])
     MainWindow & w = MainWindow::donneInstance();
     w.show();
 
-    //w.libereInstance();
-
     return a.exec();
+    w.libereInstance();
 }
