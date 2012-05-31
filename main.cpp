@@ -5,7 +5,9 @@
  */
 
 #include <QtGui/QApplication>
+
 #include "mainwindow.h"
+#include "operateur.h"
 #include "pile.h"
 
 int main(int argc, char *argv[])

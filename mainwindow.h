@@ -10,11 +10,13 @@
 #include <QMainWindow>
 #include <QMessageBox>
 
+#include "operateur.h"
+
 namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow//, public Operateur
+class MainWindow : public QMainWindow, public Operateur
 {
     Q_OBJECT
     
@@ -71,8 +73,8 @@ private slots:
     void meanPressed();    // moyenne des x premiers éléments de la pile.
     void dupPressed();     // duplique le premier élément de la pile.
     void dropPressed();    // supprime le premier élément de la pile.
-    void radPressed();     // basculer en radian.
-    void degPressed();     // basculer en degrès.
+    void radSelected();     // basculer en radian.
+    void degSelected();     // basculer en degrès.
 
 };
 
