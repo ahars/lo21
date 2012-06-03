@@ -7,6 +7,8 @@
 #ifndef OPERATEUR_H
 #define OPERATEUR_H
 
+#include <QString>
+
 class Operateur
 {
 private:

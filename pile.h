@@ -8,6 +8,7 @@
 #define PILE_H
 
 #include <QString>
+#include "factoryConstante.h"
 
 class Pile
 {
@@ -18,8 +19,16 @@ private:
     QString * tab;
 
 public:
+
+    // Constructeurs et Destructeurs.
     Pile(const int maximum = 10);
     ~Pile();
+
+    // Getters et Setters.
+    int getMax() const { return max; }
+    int getN() const { return n; }
+
+    // Autres.
     bool pilePleine();
     bool pileVide();
     void empiler(QString noeud);

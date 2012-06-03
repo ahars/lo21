@@ -6,9 +6,18 @@
 
 #include <QtGui/QApplication>
 
+#include "complexe.h"
+#include "constante.h"
+#include "entier.h"
+#include "expression.h"
+#include "factoryConstante.h"
 #include "mainwindow.h"
+#include "noncomplexe.h"
 #include "operateur.h"
 #include "pile.h"
+#include "rationnel.h"
+#include "reel.h"
+#include "type.h"
 
 int main(int argc, char *argv[])
 {

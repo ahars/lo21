@@ -11,8 +11,22 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    pile.cpp \
+    operateur.cpp \
+    factoryConstante.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    pile.h \
+    operateur.h \
+    factoryConstante.h \
+    constante.h \
+    entier.h \
+    complexe.h \
+    noncomplexe.h \
+    expression.h \
+    rationnel.h \
+    reel.h \
+    type.h
 
 FORMS    += mainwindow.ui

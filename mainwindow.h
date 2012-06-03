@@ -9,8 +9,8 @@
 
 #include <QMainWindow>
 #include <QMessageBox>
-
 #include "operateur.h"
+#include "pile.h"
 
 namespace Ui {
 class MainWindow;
@@ -24,18 +24,25 @@ private:
     static MainWindow * instanceUnique;
     Ui::MainWindow *ui;
     QString memoire;    // Pour la fonction rétablir.
+    int begin, end; // Début et Fin d'expression.
 
+    // Constructeurs et Destructeurs.
     MainWindow();
     MainWindow(const MainWindow &);
     explicit MainWindow(QWidget * parent = 0);
     virtual ~MainWindow();
     void operator=(const MainWindow &);
 
-    int begin, end; // Début et Fin d'expression.
-
 public:
+    // Singleton
     static MainWindow & donneInstance();
     static void libereInstance();
+
+    // Getters et Setters.
+    int getBegin() const { return begin; }
+    int getEnd() const { return end; }
+    void setBegin(const int b) { begin = b; }
+    void setEnd(const int e) { end = e; }
 
 private slots:
     void num0Pressed();
