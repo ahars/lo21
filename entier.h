@@ -15,13 +15,15 @@ private:
     int entier;
 
 public:
-    // Constructeur.
+    Entier() {}
     Entier(int item): entier(item){}
-
-    // Getter et Setter.
-
-    // Autres.
-
+    int getEntier() const { return entier; }
+    float getReel() const { return 0; }
+    int getNumerateur() const { return 0; }
+    int getDenominateur() const { return 0; }
+    Constante * getPartieReelle() const { return 0; }
+    Constante * getPartieImaginaire() const { return 0; }
+    QString getType() const { return "entier"; }
 };
 
 #endif // ENTIER_H

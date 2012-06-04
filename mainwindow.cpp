@@ -9,6 +9,8 @@
 
 MainWindow * MainWindow::instanceUnique = 0;
 
+Pile * pile;
+
 // Donne instance du Singleton.
 MainWindow & MainWindow::donneInstance()
 {
@@ -42,6 +44,9 @@ MainWindow::MainWindow(QWidget * parent) :
 {
     ui->setupUi(this);
 
+    // Création de la pile.
+    pile = new Pile();
+
     // Raccourcis Clavier.
     ui->button0->setShortcut(QKeySequence(Qt::Key_0));
     ui->button1->setShortcut(QKeySequence(Qt::Key_1));
@@ -57,6 +62,7 @@ MainWindow::MainWindow(QWidget * parent) :
     ui->buttonDim->setShortcut(QKeySequence(Qt::Key_Minus));
     ui->buttonMulti->setShortcut(QKeySequence(Qt::Key_Asterisk));
     ui->buttonDiv->setShortcut(QKeySequence(Qt::Key_Slash));
+    ui->buttonExpression->setShortcut(QKeySequence(Qt::Key_Apostrophe));
     ui->buttonSPACE->setShortcut(QKeySequence(Qt::Key_Space));
     ui->buttonEntrer->setShortcut(QKeySequence(Qt::Key_Return));
     ui->buttonFactoriel->setShortcut(QKeySequence(Qt::Key_Exclam));
@@ -67,6 +73,7 @@ MainWindow::MainWindow(QWidget * parent) :
     ui->buttonRetablir->setShortcut(QKeySequence(Qt::Key_Backspace));
     ui->buttonAnnuler->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
     ui->buttonRetablir->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y));
+    ui->buttonEVAL->setShortcut(QKeySequence(Qt::Key_Tab));
 
 
     // Connections.
@@ -81,15 +88,20 @@ MainWindow::MainWindow(QWidget * parent) :
     QObject::connect(ui->button8, SIGNAL(clicked()), this, SLOT(num8Pressed()));
     QObject::connect(ui->button9, SIGNAL(clicked()), this, SLOT(num9Pressed()));
 
-    QObject::connect(ui->buttonPoint, SIGNAL(clicked()), this, SLOT(pointPressed()));
-    QObject::connect(ui->buttonDollar, SIGNAL(clicked()), this, SLOT(dollarPressed()));
     QObject::connect(ui->buttonRetablir, SIGNAL(clicked()), this, SLOT(retablirPressed()));
+    QObject::connect(ui->buttonSPACE, SIGNAL(clicked()), this, SLOT(spacePressed()));
+    QObject::connect(ui->buttonEntrer, SIGNAL(clicked()), this, SLOT(entrerPressed()));
+    QObject::connect(ui->buttonAnnuler, SIGNAL(clicked()), this, SLOT(annulerPressed()));
+    QObject::connect(ui->buttonCLEAR, SIGNAL(clicked()), this, SLOT(clearPressed()));
+    QObject::connect(ui->buttonEVAL, SIGNAL(clicked()), this, SLOT(evalPressed()));
+
+    QObject::connect(ui->buttonPoint, SIGNAL(clicked()), this, SLOT(pointPressed()));
+    QObject::connect(ui->buttonExpression, SIGNAL(clicked()), this, SLOT(ExpressionPressed()));
+    QObject::connect(ui->buttonDollar, SIGNAL(clicked()), this, SLOT(dollarPressed()));
     QObject::connect(ui->buttonPlus, SIGNAL(clicked()), this, SLOT(plusPressed()));
     QObject::connect(ui->buttonDim, SIGNAL(clicked()), this, SLOT(dimPressed()));
     QObject::connect(ui->buttonMulti, SIGNAL(clicked()), this, SLOT(multPressed()));
     QObject::connect(ui->buttonDiv, SIGNAL(clicked()), this, SLOT(divPressed()));
-    QObject::connect(ui->buttonSPACE, SIGNAL(clicked()), this, SLOT(spacePressed()));
-    QObject::connect(ui->buttonEntrer, SIGNAL(clicked()), this, SLOT(entrerPressed()));
     QObject::connect(ui->buttonFactoriel, SIGNAL(clicked()), this, SLOT(factPressed()));
     QObject::connect(ui->buttonSin, SIGNAL(clicked()), this, SLOT(sinPressed()));
     QObject::connect(ui->buttonCos, SIGNAL(clicked()), this, SLOT(cosPressed()));
@@ -104,13 +116,46 @@ MainWindow::MainWindow(QWidget * parent) :
     QObject::connect(ui->buttonMEAN, SIGNAL(clicked()), this, SLOT(meanPressed()));
     QObject::connect(ui->buttonDROP, SIGNAL(clicked()), this, SLOT(dropPressed()));
     QObject::connect(ui->buttonDUP, SIGNAL(clicked()), this, SLOT(dupPressed()));
-    QObject::connect(ui->buttonAnnuler, SIGNAL(clicked()), this, SLOT(annulerPressed()));
 
     QObject::connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(about()));
     QObject::connect(ui->actionRad, SIGNAL(triggered()), this, SLOT(radSelected()));
     QObject::connect(ui->actionDeg, SIGNAL(triggered()), this, SLOT(degSelected()));
 }
 
+// Appui sur le bouton =.
+void MainWindow::entrerPressed()
+{
+
+}
+
+// Évaluer une expression.
+void MainWindow::evalPressed()
+{
+
+}
+
+// Appui sur le bouton retablir.
+void MainWindow::retablirPressed()
+{
+    ui->inputLine->setText(memoire);
+}
+
+// Appui sur le bouton annuler.
+void MainWindow::annulerPressed()
+{
+
+}
+
+// Appui sur le bouton Clear.
+void MainWindow::clearPressed()
+{
+    memoire = ui->inputLine->text();
+    ui->inputLine->setText("");
+
+    // Vider la pile.
+    for(int i = 0; i < pile->getN(); i++)
+        pile->depiler();
+}
 
 // Appui sur le bouton SWAP.
 void MainWindow::swapPressed()
@@ -142,12 +187,6 @@ void MainWindow::dropPressed()
     ui->inputLine->setText(ui->inputLine->text()+"DROP");
 }
 
-// Appui sur le bouton =.
-void MainWindow::entrerPressed()
-{
-
-}
-
 // Appui sur le bouton SPACE.
 void MainWindow::spacePressed()
 {
@@ -158,12 +197,6 @@ void MainWindow::spacePressed()
 void MainWindow::dollarPressed()
 {
     ui->inputLine->setText(ui->inputLine->text()+"$");
-}
-
-// Appui sur le bouton retablir.
-void MainWindow::retablirPressed()
-{
-    ui->inputLine->setText(memoire);
 }
 
 // Appui sur le bouton +.
@@ -188,6 +221,12 @@ void MainWindow::multPressed()
 void MainWindow::divPressed()
 {
     ui->inputLine->setText(ui->inputLine->text()+"/");
+}
+
+// Appui sur le bouton '.
+void MainWindow::ExpressionPressed()
+{
+    ui->inputLine->setText(ui->inputLine->text()+"'");
 }
 
 // Appui sur le bouton 0.
@@ -327,12 +366,6 @@ void MainWindow::logPressed()
 void MainWindow::lnPressed()
 {
     ui->inputLine->setText(ui->inputLine->text()+"ln");
-}
-
-// Appui sur le bouton annuler.
-void MainWindow::annulerPressed()
-{
-
 }
 
 // basculer en radian.

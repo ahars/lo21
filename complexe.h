@@ -17,7 +17,15 @@ private:
     Constante * partieImaginaire;
 
 public:
-    Complexe(Constante * item1, Constante * item2): partieReelle(item1), partieImaginaire(item2){}
+    Complexe() {}
+    Complexe(Constante * item1, Constante * item2): partieReelle(item1), partieImaginaire(item2) {}
+    int getEntier() const { return 0; }
+    float getReel() const { return 0; }
+    int getNumerateur() const { return 0; }
+    int getDenominateur() const { return 0; }
+    Constante * getPartieReelle() const { return partieReelle; }
+    Constante * getPartieImaginaire() const { return partieImaginaire; }
+    QString getType() const { return "complexe"; }
 };
 
 #endif // COMPLEXE_H

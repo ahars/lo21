@@ -16,24 +16,19 @@ class Pile
 private:
     int max;
     int n;
-    QString * tab;
+    Constante ** tab;
 
 public:
-
-    // Constructeurs et Destructeurs.
     Pile(const int maximum = 10);
     ~Pile();
-
-    // Getters et Setters.
     int getMax() const { return max; }
     int getN() const { return n; }
-
-    // Autres.
+    Constante * getTab(const int i) const { return tab[i]; }
+    void setTab(const int i, Constante * item) { tab[i] = item; }
     bool pilePleine();
     bool pileVide();
-    void empiler(QString noeud);
-    QString depiler();
-
+    void empiler(Constante * noeud);
+    Constante * depiler();
 };
 
 #endif // PILE_H

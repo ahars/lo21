@@ -15,7 +15,14 @@ private:
     float reel;
 
 public:
-    Reel(float item): reel(item){}
+    Reel(float item): reel(item) {}
+    float getReel() const { return reel; }
+    int getEntier() const { return 0; }
+    int getNumerateur() const { return 0; }
+    int getDenominateur() const { return 0; }
+    Constante * getPartieReelle() const { return 0; }
+    Constante * getPartieImaginaire() const { return 0; }
+    QString getType() const { return "reel"; }
 };
 
 #endif // REEL_H

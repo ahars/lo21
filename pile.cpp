@@ -11,7 +11,7 @@ Pile::Pile(const int maximum):
     max(maximum),
     n(0)
 {
-    tab = new QString[max];
+    tab = new Constante*[max];
 }
 
 // Destructeur.
@@ -39,7 +39,7 @@ bool Pile::pileVide()
 }
 
 // Empile un élément dans la pile.
-void Pile::empiler(QString noeud)
+void Pile::empiler(Constante * noeud)
 {
     if (!pilePleine())
     {
@@ -49,9 +49,9 @@ void Pile::empiler(QString noeud)
 }
 
 // Dépile le dernier élément de la pile.
-QString Pile::depiler()
+Constante * Pile::depiler()
 {
-    QString result;
+    Constante * result;
     if (!pileVide())
     {
         result = tab[n-1];

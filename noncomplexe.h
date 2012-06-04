@@ -14,7 +14,7 @@ class NonComplexe: public Type
 private:
 
 public:
-
+    NonComplexe() {}
 };
 
 #endif // NONCOMPLEXE_H

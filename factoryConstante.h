@@ -16,6 +16,7 @@
 class FactoryConstante
 {
 public:
+    FactoryConstante() {}
     Constante * creeConstante(QString type, int item1 = 0, int item2 = 0, float item3 = 0, Constante * item4 = 0, Constante * item5 = 0);
 };
 

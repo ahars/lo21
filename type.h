@@ -15,7 +15,7 @@ private:
     QString type;
 
 public:
-
+    Type(){}
 };
 
 #endif // TYPE_H
