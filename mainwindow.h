@@ -11,6 +11,7 @@
 #include <QMessageBox>
 #include "operateur.h"
 #include "pile.h"
+#include "expression.h"
 
 #define PI 3.14
 
@@ -26,6 +27,8 @@ private:
     static MainWindow * instanceUnique;
     Ui::MainWindow *ui;
     QString memoire;    // Pour la fonction rétablir.
+    Expression expPile;
+    int test; // marque si c'est une expression et si c'est deja évalué, initialisé a 0
 
     // Constructeurs et Destructeurs.
     MainWindow();

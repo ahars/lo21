@@ -9,7 +9,8 @@
 
 MainWindow * MainWindow::instanceUnique = 0;
 
-Pile * pile;
+Pile pile;
+FactoryConstante fac;
 
 // Donne instance du Singleton.
 MainWindow & MainWindow::donneInstance()
@@ -43,9 +44,6 @@ MainWindow::MainWindow(QWidget * parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    // Création de la pile.
-    pile = new Pile();
 
     // Raccourcis Clavier.
     ui->button0->setShortcut(QKeySequence(Qt::Key_0));
@@ -125,7 +123,484 @@ MainWindow::MainWindow(QWidget * parent) :
 // Appui sur le bouton =.
 void MainWindow::entrerPressed()
 {
+    QString value=ui->inputLine->text();
+        QRegExp re("[ ]+");
+        QStringList list = value.split(re);
 
+        int i=0;
+
+        while(i<list.count()){
+            QRegExp ex("[']+"); //detecter s'il y a expression
+            QStringList expression = list[i].split(ex);
+
+            if(expression.count()>1&&expression[0]==""){//debut d'expression
+                 list[i]=expression[1];
+                 test=1;   //debut d'expression
+            }
+
+            if(expression.count()>1&&expression[1]==""){//fin d'expression
+                 list[i]=expression[0];
+                 expPile.insert(list[i]);
+            }
+
+            if(test==1){
+                 expPile.insert(list[i]);
+            }
+
+            if(test==0&&list[i]!="SWAP"&&list[i]!="SUM"&&list[i]!="MEAN"&&list[i]!="DUP"&&
+                    list[i]!="DROP"&&list[i]!="+"&&list[i]!="-"&&list[i]!="*"&&
+                    list[i]!="/"&&list[i]!="!"&&list[i]!="sin"&&list[i]!="cos"&&
+                    list[i]!="tan"&&list[i]!="sinh"&&list[i]!="cosh"&&list[i]!="tanh"&&
+                    list[i]!="log"&&list[i]!="ln"&&list[i]!="INV"&&list[i]!="SQRT"&&
+                    list[i]!="SQR"&&list[i]!="CUBE"&&list[i]!="POW"&&list[i]!="MOD"&&
+                    list[i]!="SIGN"){
+
+                //saisir reel,rationnelle,complexe ou entier
+                QRegExp ra("[/]+");
+                QStringList rationnelle = list[i].split(ra);
+                QRegExp ree("[.]+");
+                QStringList reel = list[i].split(ree);
+                QRegExp co("[$]+");
+                QStringList comp = list[i].split(co);
+
+                //determiner s'il est complexe d'abord
+                if(comp.count()>1){
+                    //saisir un complexe, comp[0] est reel, comp[1] est virtuel
+
+                    QStringList rationReel = comp[0].split(ra);//rationReel[0]/rationReel[1]
+                    QStringList rationVir = comp[1].split(ra); //rationVir[0]/rationVir[1]
+
+                    QStringList reelReel = comp[0].split(ree); //reelReel[0].reelReel[1]
+                    QStringList reelVir = comp[1].split(ree);  //reelVir[0].reelVir[1]
+
+                    Constante* comReel,* comVirtuel;
+
+                    //complexe:pour le partie reel
+                    if(rationReel.count()>1){
+                        //saisir un rationnelle
+                        int num=rationReel[0].toInt();//numerateur
+                        int den=rationReel[1].toInt();//denominateur
+
+                        //simplifier
+                        int min=(num<=den?num:den);
+                        for(int i=min;i>1;i--){
+                            if(num%i==0&&den%i==0){
+                                num/=i;
+                                den/=i;
+                            }
+                        }
+                        //empiler
+                        comReel=fac.creeConstante("rationnelle",num,den);
+
+                    }else
+                        if(reelReel.count()>1){
+                            //saisir un reel
+                            comReel=fac.creeConstante("reel",0,0,comp[0].toFloat());
+
+                        }else{
+                                //saisir un entier
+                                Constante *entier=fac.creeConstante("entier",comp[0].toInt());
+                                comReel=entier;
+                            }
+
+
+                    //complexe:pour le partie virtuel
+                    if(rationVir.count()>1){
+                        //saisir un rationnelle
+                        int num=rationVir[0].toInt();//numerateur
+                        int den=rationVir[1].toInt();//denominateur
+
+                        //simplifier
+                        int min=(num<=den?num:den);
+                        for(int i=min;i>1;i--){
+                            if(num%i==0&&den%i==0){
+                                num/=i;
+                                den/=i;
+                            }
+                        }
+                        //empiler
+                        comVirtuel=fac.creeConstante("rationnelle",num,den);
+
+                    }else
+                        if(reelVir.count()>1){
+                            //saisir un reel
+                            comVirtuel=fac.creeConstante("reel",0,0,comp[1].toFloat());
+
+                        }else{
+                                //saisir un entier
+                                Constante *entier=fac.creeConstante("entier",comp[1].toInt());
+                                comVirtuel=entier;
+                            }
+
+                    Constante* complexe=fac.creeConstante("complexe",0,0,0,comReel,comVirtuel);
+                    pile.empiler(complexe);
+
+                }//saisir n'est pas complexe
+                else{
+                if(rationnelle.count()>1){
+                    //saisir un rationnelle
+                    int num=rationnelle[0].toInt();//numerateur
+                    int den=rationnelle[1].toInt();//denominateur
+
+                    //simplifier
+                    int min=(num<=den?num:den);
+                    for(int i=min;i>1;i--){
+                        if(num%i==0&&den%i==0){
+                            num/=i;
+                            den/=i;
+                        }
+                    }
+                    //empiler
+                    Constante* ration=fac.creeConstante("rationnelle",num,den);
+                    pile.empiler(ration);
+
+                }else
+                    if(reel.count()>1){
+                        //saisir un reel
+                        Constante* reelle=fac.creeConstante("reel",0,0,list[i].toFloat());
+                        pile.empiler(reelle);
+
+                    }else{
+                            //saisir un entier
+                            Constante* entier=fac.creeConstante("entier",list[i].toInt());
+                            pile.empiler(entier);
+                        }
+             }
+            }
+
+
+       if(test==0) //quand test==0, il n'y a pas d'expression constante
+       {
+            if(list[i]=="SWAP"){
+                //pour l'expression
+                int val1=pile.getTab(pile.getN()-1)->getEntier();
+                int val2=pile.getTab(pile.getN()-2)->getEntier();
+                QString exp="SWAP d'elements num "+QString::number(val1,10)+" et num "+QString::number(val2,10)+" est:";
+                ui->Express->setText(exp);
+
+                //appeler la fonction
+                opSWAP(pile, val1, val2);
+            }
+    /*
+            if(list[i]=="SUM"){
+                //pour l'expression
+                int val1=stack->tab[stack->N-1].getEntier();
+                QString exp="Sum de premiers "+QString::number(val1,10)+" elements est:";
+                ui->Express->setText(exp);
+
+                //appeler la fonction
+                //opSUM();
+            }
+
+            if(list[i]=="MEAN"){
+                //pour l'expression
+                int val1=stack->tab[stack->N-1].getEntier();
+                QString exp="MEAN de premiers "+QString::number(val1,10)+" elements est:";
+                ui->Express->setText(exp);
+
+                //appeler la fonction
+                //opMEAN();
+            }
+
+            if(list[i]=="DUP"){
+                //appeler la fonction
+                //opDUP();
+
+                //pour l'expression
+                ui->Express->setText("DUP");
+            }
+
+            if(list[i]=="DROP"){
+                //appeler la fonction
+                //opDROP();
+
+                //pour l'expression
+                ui->Express->setText("DROP");
+            }
+
+            if(list[i]=="+"){
+                //pour l'expression
+                QString exp;
+                if(stack->tab[stack->N-1].getType()=="entier"){
+                     int val1=stack->tab[stack->N-1].getEntier();
+                     int val2=stack->tab[stack->N-2].getEntier();
+                     exp=QString::number(val2,10)+"+"+QString::number(val1,10)+"=";
+                }
+                if(stack->tab[stack->N-1].getType()=="rationnelle"){
+                     int num1=stack->tab[stack->N-1].getNumerateur();
+                     int den1=stack->tab[stack->N-1].getDenominateur();
+                     int num2=stack->tab[stack->N-2].getNumerateur();
+                     int den2=stack->tab[stack->N-2].getDenominateur();
+                     exp=QString::number(num1,10)+"/"+QString::number(den1,10)+"+"
+                             +QString::number(num2,10)+"/"+QString::number(den2,10)+"=";
+                }
+                if(stack->tab[stack->N-1].getType()=="reel"){
+                     float val1=stack->tab[stack->N-1].getReel();
+                     float val2=stack->tab[stack->N-2].getReel();
+                     exp=QString::number(val2,'g',10)+"+"+QString::number(val1,'g',10)+"=";
+                }
+                if(stack->tab[stack->N-1].getType()=="complexe"){
+                    float reel1=stack->tab[stack->N-1].getComReel();
+                    float virtuel1=stack->tab[stack->N-1].getComVirtuel();
+                    float reel2=stack->tab[stack->N-2].getComReel();
+                    float virtuel2=stack->tab[stack->N-2].getComVirtuel();
+                    exp=QString::number(reel1,'g',10)+"$"+QString::number(virtuel1,'g',10)+"+"
+                            +QString::number(reel2,'g',10)+"$"+QString::number(virtuel2,'g',10)+"=";
+                }
+
+                ui->Express->setText(exp);
+
+                //appeler la fonction
+                //opPlus();
+                }
+
+            if(list[i]=="-"){
+                //pour l'expression
+                QString exp;
+                if(stack->tab[stack->N-1].getType()=="entier"){
+                     int val1=stack->tab[stack->N-1].getEntier();
+                     int val2=stack->tab[stack->N-2].getEntier();
+                     exp=QString::number(val2,10)+"-"+QString::number(val1,10)+"=";
+                }
+                if(stack->tab[stack->N-1].getType()=="rationnelle"){
+                     int num1=stack->tab[stack->N-1].getNumerateur();
+                     int den1=stack->tab[stack->N-1].getDenominateur();
+                     int num2=stack->tab[stack->N-2].getNumerateur();
+                     int den2=stack->tab[stack->N-2].getDenominateur();
+                     exp=QString::number(num1,10)+"/"+QString::number(den1,10)+"-"
+                             +QString::number(num2,10)+"/"+QString::number(den2,10)+"=";
+                }
+                if(stack->tab[stack->N-1].getType()=="reel"){
+                     float val1=stack->tab[stack->N-1].getReel();
+                     float val2=stack->tab[stack->N-2].getReel();
+                     exp=QString::number(val2,'g',10)+"-"+QString::number(val1,'g',10)+"=";
+                }
+                if(stack->tab[stack->N-1].getType()=="complexe"){
+                    float reel1=stack->tab[stack->N-1].getComReel();
+                    float virtuel1=stack->tab[stack->N-1].getComVirtuel();
+                    float reel2=stack->tab[stack->N-2].getComReel();
+                    float virtuel2=stack->tab[stack->N-2].getComVirtuel();
+                    exp=QString::number(reel1,'g',10)+"$"+QString::number(virtuel1,'g',10)+"-"
+                            +QString::number(reel2,'g',10)+"$"+QString::number(virtuel2,'g',10)+"=";
+                }
+                ui->Express->setText(exp);
+
+                //appeler la fonction
+                //opDim();
+                }
+
+            if(list[i]=="*"){
+                //pour l'expression
+                QString exp;
+                if(stack->tab[stack->N-1].getType()=="entier"){
+                     int val1=stack->tab[stack->N-1].getEntier();
+                     int val2=stack->tab[stack->N-2].getEntier();
+                     exp=QString::number(val2,10)+"*"+QString::number(val1,10)+"=";
+                }
+                if(stack->tab[stack->N-1].getType()=="rationnelle"){
+                     int num1=stack->tab[stack->N-1].getNumerateur();
+                     int den1=stack->tab[stack->N-1].getDenominateur();
+                     int num2=stack->tab[stack->N-2].getNumerateur();
+                     int den2=stack->tab[stack->N-2].getDenominateur();
+                     exp=QString::number(num1,10)+"/"+QString::number(den1,10)+"*"
+                             +QString::number(num2,10)+"/"+QString::number(den2,10)+"=";
+                }
+                if(stack->tab[stack->N-1].getType()=="reel"){
+                     float val1=stack->tab[stack->N-1].getReel();
+                     float val2=stack->tab[stack->N-2].getReel();
+                     exp=QString::number(val2,'g',10)+"*"+QString::number(val1,'g',10)+"=";
+                }
+                if(stack->tab[stack->N-1].getType()=="complexe"){
+                    float reel1=stack->tab[stack->N-1].getComReel();
+                    float virtuel1=stack->tab[stack->N-1].getComVirtuel();
+                    float reel2=stack->tab[stack->N-2].getComReel();
+                    float virtuel2=stack->tab[stack->N-2].getComVirtuel();
+                    exp=QString::number(reel1,'g',10)+"$"+QString::number(virtuel1,'g',10)+"*"
+                            +QString::number(reel2,'g',10)+"$"+QString::number(virtuel2,'g',10)+"=";
+                }
+                ui->Express->setText(exp);
+
+                //appeler la fonction
+                //opMult();
+                }
+
+            if(list[i]=="/"){
+                //pour l'expression
+                QString exp;
+                if(stack->tab[stack->N-1].getType()=="entier"){
+                     int val1=stack->tab[stack->N-1].getEntier();
+                     int val2=stack->tab[stack->N-2].getEntier();
+                     exp=QString::number(val2,10)+"/"+QString::number(val1,10)+"=";
+                }
+                if(stack->tab[stack->N-1].getType()=="rationnelle"){
+                     int num1=stack->tab[stack->N-1].getNumerateur();
+                     int den1=stack->tab[stack->N-1].getDenominateur();
+                     int num2=stack->tab[stack->N-2].getNumerateur();
+                     int den2=stack->tab[stack->N-2].getDenominateur();
+                     exp=QString::number(num1,10)+"/"+QString::number(den1,10)+" / "
+                             +QString::number(num2,10)+"/"+QString::number(den2,10)+"=";
+                }
+                if(stack->tab[stack->N-1].getType()=="reel"){
+                     float val1=stack->tab[stack->N-1].getReel();
+                     float val2=stack->tab[stack->N-2].getReel();
+                     exp=QString::number(val2,'g',10)+"/"+QString::number(val1,'g',10)+"=";
+                }
+                if(stack->tab[stack->N-1].getType()=="complexe"){
+                    float reel1=stack->tab[stack->N-1].getComReel();
+                    float virtuel1=stack->tab[stack->N-1].getComVirtuel();
+                    float reel2=stack->tab[stack->N-2].getComReel();
+                    float virtuel2=stack->tab[stack->N-2].getComVirtuel();
+                    exp=QString::number(reel1,'g',10)+"$"+QString::number(virtuel1,'g',10)+"/"
+                            +QString::number(reel2,'g',10)+"$"+QString::number(virtuel2,'g',10)+"=";
+                }
+                ui->Express->setText(exp);
+
+                //appeler la fonction
+                //opDiv();
+            }
+
+            if(list[i]=="!"){
+                //pour l'expression
+                int val1=stack->tab[stack->N-1].getEntier();
+                QString exp=QString::number(val1,10)+"!=";
+                ui->Express->setText(exp);
+
+                //appeler la fonction
+                //opFact();
+            }
+
+            if(list[i]=="sin"){
+                //pour l'expression
+                int val1=stack->tab[stack->N-1].toInt();
+                QString exp="sin"+QString::number(val1,'g',10)+"=";
+                ui->Express->setText(exp);
+
+                //appeler la fonction
+                opSin();
+            }
+
+            if(list[i]=="cos"){
+                //pour l'expression
+                int val1=stack->tab[stack->N-1].toInt();
+                QString exp="cos"+QString::number(val1,'g',10)+"=";
+                ui->Express->setText(exp);
+
+                //appeler la fonction
+                opCos();
+
+            }
+
+            if(list[i]=="tan"){
+                //pour l'expression
+                int val1=stack->tab[stack->N-1].toInt();
+                QString exp="tan"+QString::number(val1,'g',10)+"=";
+                ui->Express->setText(exp);
+
+                //appeler la fonction
+                opTan();
+            }
+
+            if(list[i]=="sinh"){
+                //pour l'expression
+                int val1=stack->tab[stack->N-1].toInt();
+                QString exp="sinh"+QString::number(val1,'g',10)+"=";
+                ui->Express->setText(exp);
+
+                //appeler la fonction
+                opSinh();
+
+                }
+
+            if(list[i]=="cosh"){
+                //pour l'expression
+                int val1=stack->tab[stack->N-1].toInt();
+                QString exp="cosh"+QString::number(val1,'g',10)+"=";
+                ui->Express->setText(exp);
+
+                //appeler la fonction
+                opCosh();
+
+                }
+
+            if(list[i]=="tanh"){
+                //pour l'expression
+                int val1=stack->tab[stack->N-1].toInt();
+                QString exp="tanh"+QString::number(val1,'g',10)+"=";
+                ui->Express->setText(exp);
+
+                //appeler la fonction
+                opTanh();
+
+            }
+
+            if(list[i]=="log"){
+                //pour l'expression
+                int val1=stack->tab[stack->N-1].toInt();
+                QString exp="log"+QString::number(val1,'g',10)+"=";
+                ui->Express->setText(exp);
+
+                //appeler la fonction
+                oplog();
+            }
+
+            if(list[i]=="ln"){
+                //pour l'expression
+                int val1=stack->tab[stack->N-1].toInt();
+                QString exp="ln"+QString::number(val1,'g',10)+"=";
+                ui->Express->setText(exp);
+
+                //appeler la fonction
+                opln();
+            }
+            */
+       }
+
+        i++;
+
+        }
+
+        ui->listWidget->clear();
+
+        for(int j=0;j<pile.getN();j++){
+            if(pile.getTab(j)->getType()=="entier"){
+                ui->listWidget->addItem(QString::number(pile.getTab(j)->getEntier(),10));
+            }
+            if(pile.getTab(j)->getType()=="rationnelle"){
+                QString res=QString::number(pile.getTab(j)->getNumerateur(),10)+"/"+QString::number(pile.getTab(j)->getDenominateur(),10);
+                ui->listWidget->addItem(res);
+            }
+            if(pile.getTab(j)->getType()=="reel"){
+                ui->listWidget->addItem(QString::number(pile.getTab(j)->getReel(),'g',10));
+            }
+            if(pile.getTab(j)->getType()=="complexe"){
+                QString res;
+                //afficher partie reelle
+                if(pile.getTab(j)->getPartieReelle()->getType()=="entier"){
+                    res=QString::number(pile.getTab(j)->getPartieReelle()->getEntier(),10)+"$";
+                }
+                if(pile.getTab(j)->getPartieReelle()->getType()=="reel"){
+                    res=QString::number(pile.getTab(j)->getPartieReelle()->getReel(),'g',10)+"$";
+                }
+                if(pile.getTab(j)->getPartieReelle()->getType()=="rationnelle"){
+                    res=QString::number(pile.getTab(j)->getPartieReelle()->getNumerateur(),10)+"/"+QString::number(pile.getTab(j)->getPartieReelle()->getDenominateur(),10)+"$";
+                }
+
+                //afficher partie virtuel
+                if(pile.getTab(j)->getPartieImaginaire()->getType()=="entier"){
+                    res+=QString::number(pile.getTab(j)->getPartieImaginaire()->getEntier(),10);
+                }
+                if(pile.getTab(j)->getPartieImaginaire()->getType()=="reel"){
+                    res+=QString::number(pile.getTab(j)->getPartieImaginaire()->getReel(),'g',10);
+                }
+                if(pile.getTab(j)->getPartieImaginaire()->getType()=="rationnelle"){
+                    res+=QString::number(pile.getTab(j)->getPartieImaginaire()->getNumerateur(),10)+"/"+QString::number(pile.getTab(j)->getPartieImaginaire()->getDenominateur(),10);
+                }
+
+                ui->listWidget->addItem(res);
+            }
+        }
+
+        ui->inputLine->setText("");
 }
 
 // Évaluer une expression.
@@ -153,8 +628,8 @@ void MainWindow::clearPressed()
     ui->inputLine->setText("");
 
     // Vider la pile.
-    for(int i = 0; i < pile->getN(); i++)
-        pile->depiler();
+    for(int i = 0; i < pile.getN(); i++)
+        pile.depiler();
 }
 
 // Appui sur le bouton SWAP.
