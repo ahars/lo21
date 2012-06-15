@@ -5,6 +5,7 @@
  */
 
 #include "operateur.h"
+#include "factoryConstante.h"
 
 void Operateur::opSWAP(Pile & pile, int valeur1, int valeur2)
 {

@@ -27,6 +27,8 @@ HEADERS  += mainwindow.h \
     expression.h \
     rationnel.h \
     reel.h \
-    type.h
+    type.h \
+    observablePile.h \
+    observateurMW.h
 
 FORMS    += mainwindow.ui

@@ -8,11 +8,13 @@
 #define PILE_H
 
 #include <QString>
+#include <set>
+
 #include "factoryConstante.h"
+#include "observablePile.h"
 
-class Pile
+class Pile: public ObservablePile
 {
-
 private:
     int max;
     int n;
@@ -29,6 +31,10 @@ public:
     bool pileVide();
     void empiler(Constante * noeud);
     Constante * depiler();
+
+    void ajouterObservateurMW(ObservateurMW * o) { obs.insert(o); }
+    void supprimerObservateurMW(ObservateurMW *o) { obs.erase(o); }
+    void notifier();
 };
 
 #endif // PILE_H

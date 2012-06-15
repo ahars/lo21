@@ -11,7 +11,7 @@ Pile::Pile(const int maximum):
     max(maximum),
     n(0)
 {
-    tab = new Constante*[max];
+    tab = new Constante * [max];
 }
 
 // Destructeur.
@@ -59,3 +59,13 @@ Constante * Pile::depiler()
     }
     return result;
 }
+
+// Notifier à l'observateur.
+void Pile::notifier()
+{
+    std::set<ObservateurMW *>::iterator it;
+    for (it = obs.begin(); it != obs.end(); ++it)
+        (* it)->miseAJour();
+}
+
+

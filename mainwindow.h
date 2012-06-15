@@ -9,9 +9,11 @@
 
 #include <QMainWindow>
 #include <QMessageBox>
+
 #include "operateur.h"
 #include "pile.h"
 #include "expression.h"
+#include "observateurMW.h"
 
 #define PI 3.14
 
@@ -19,7 +21,7 @@ namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow, public Operateur
+class MainWindow : public QMainWindow, public Operateur, public ObservateurMW
 {
     Q_OBJECT
     
@@ -29,6 +31,7 @@ private:
     QString memoire;    // Pour la fonction rétablir.
     Expression expPile;
     int test; // marque si c'est une expression et si c'est deja évalué, initialisé a 0
+    Pile * pile;
 
     // Constructeurs et Destructeurs.
     MainWindow();
@@ -38,9 +41,12 @@ private:
     void operator=(const MainWindow &);
 
 public:
-    // Singleton
+    // Singleton.
     static MainWindow & donneInstance();
     static void libereInstance();
+
+    // Observer.
+    void miseAJour();
 
 private slots:
     void num0Pressed();

@@ -18,6 +18,8 @@
 #include "rationnel.h"
 #include "reel.h"
 #include "type.h"
+#include "observablePile.h"
+#include "observateurMW.h"
 
 int main(int argc, char *argv[])
 {
