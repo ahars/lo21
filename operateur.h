@@ -8,42 +8,40 @@
 #define OPERATEUR_H
 
 #include <QMessageBox>
-#include <QString>
+#include "math.h"
 #include "pile.h"
+
+#define PI 3.14
 
 class Operateur
 {
-private:
-    QString type;   // type en radian ou degrès (initialisé en radian).
-
 public:
-    // Constructeur
-    Operateur(): type("rad"){}
-
-    // Getters et Setters.
-    QString getType() const { return type; }
-    void setType(const QString t){ type = t; }
-
-    // Autres
-    void opSWAP(Pile & pile, int valeur1 = 0, int valeur2 = 0);
-    void opSUM(Pile & pile);
-    void opMEAN(Pile & pile);
-    void opDUP(Pile & pile);
-    void opDROP(Pile & pile);
-    void opPlus(Pile & pile);
-    void opDim(Pile & pile);
-    void opMult(Pile & pile);
-    void opDiv(Pile & pile);
-    void opFact(Pile & pile);
-    void opSin(Pile & pile);
-    void opCos(Pile & pile);
-    void opTan(Pile & pile);
-    void opSinh(Pile & pile);
-    void opCosh(Pile & pile);
-    void opTanh(Pile & pile);
-    void opLog(Pile & pile);
-    void opLn(Pile & pile);
-
+    Operateur(){}
+    void opSWAP(Pile & p);  //fonction SWAP
+    void opSUM(Pile & p, QString mode, int com);   //fonction SUM
+    void opMEAN(Pile & p, QString mode, int com);  //fonction MEAN
+    void opDUP(Pile & p);   //fonction DUP
+    void opDROP(Pile & p);  //fonction DROP
+    void opPlus(Pile & p, QString mode,int com);  //fonction +
+    void opDim(Pile & p, QString mode,int com);   //fonction -
+    void opMult(Pile & p, QString mode,int com);  //fonction *
+    void opDiv(Pile & p, QString mode,int com);   //fonction diviser /
+    void opFact(Pile & p);  //fonction factoriel !
+    void opSin(Pile & p, QString type);   //fonction sin
+    void opCos(Pile & p, QString type);   //fonction cos
+    void opTan(Pile & p, QString type);   //fonction tan
+    void opSinh(Pile & p, QString type);  //fonction sinh
+    void opCosh(Pile & p, QString type);  //fonction cosh
+    void opTanh(Pile & p, QString type);  //fonction tanh
+    void opLog(Pile & p);   //fonction log
+    void opLn(Pile & p);    //fonction ln
+    void opPOW(Pile & p, QString mode);   //fonction POW
+    void opMOD(Pile & p);   //fonction MOD
+    void opSIGN(Pile & p);  //fonction SIGN
+    void opINV(Pile & p);   //fonction INV
+    void opSQRT(Pile & p);  //fonction SQRT
+    void opSQR(Pile & p);   //fonction SQR
+    void opCUBE(Pile & p);  //fonction CUBE
 };
 
 #endif // OPERATEUR_H

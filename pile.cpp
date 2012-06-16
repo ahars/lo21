@@ -17,6 +17,8 @@ Pile::Pile(const int maximum):
 // Destructeur.
 Pile::~Pile()
 {
+    for (int i = 0; i < max; i++)
+        delete tab[i];
     delete[] tab;
 }
 

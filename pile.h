@@ -25,6 +25,7 @@ public:
     ~Pile();
     int getMax() const { return max; }
     int getN() const { return n; }
+    void setN(const int nb) { n = nb; }
     Constante * getTab(const int i) const { return tab[i]; }
     void setTab(const int i, Constante * item) { tab[i] = item; }
     bool pilePleine();

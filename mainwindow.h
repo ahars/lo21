@@ -15,8 +15,6 @@
 #include "expression.h"
 #include "observateurMW.h"
 
-#define PI 3.14
-
 namespace Ui {
 class MainWindow;
 }
@@ -26,11 +24,15 @@ class MainWindow : public QMainWindow, public Operateur, public ObservateurMW
     Q_OBJECT
     
 private:
+    QString type; // Radian ou degrès, initialisé à radian.
+    QString mode; // Entier ou rationnel ou réel, initialisé à entier.
+    int com; // Utilisation des complexes ou non, initialisé à 0 pour les non-complexes.
+    Expression expPile; // Sauvegarde de l'expression.
+    int test; // marque si c'est une expression et si c'est deja évalué, initialisé a 0.
+    QString memoire;    // Pour la fonction rétablir.
+
     static MainWindow * instanceUnique;
     Ui::MainWindow *ui;
-    QString memoire;    // Pour la fonction rétablir.
-    Expression expPile;
-    int test; // marque si c'est une expression et si c'est deja évalué, initialisé a 0
     Pile * pile;
 
     // Constructeurs et Destructeurs.
