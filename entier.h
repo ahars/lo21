@@ -16,7 +16,7 @@ private:
 
 public:
     Entier() {}
-    Entier(int item): entier(item){}
+    Entier(int item): entier(item) {}
     int getEntier() const { return entier; }
     float getReel() const { return 0; }
     int getNumerateur() const { return 0; }

@@ -1,3 +1,12 @@
+/**
+\file factoryConstante.cpp
+\author Jia Han & Antoine Hars
+\brief Déclaration des méthodes de la classe FactoryConstante
+
+Ce fichier contient la déclaration des méthodes de la class FactoryConstante.
+
+**/
+
 /* UV: LO21 - projet
  * Sujet: Calculatrice à notation polonaise inversée
  * Auteurs: Han Jia & Antoine Hars

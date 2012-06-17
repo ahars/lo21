@@ -12,6 +12,7 @@
 class Constante
 {
 public:
+    Constante() {}
     virtual QString getType() const = 0;
     virtual int getEntier() const = 0;
     virtual float getReel() const = 0;

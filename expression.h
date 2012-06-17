@@ -14,6 +14,7 @@ class Expression : public Constante
 private:
     QString * expression;
     int n;
+
 public:
     Expression(): n(0) { expression = new QString[100]; }
     ~Expression() { delete[] expression; }

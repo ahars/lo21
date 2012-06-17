@@ -32,8 +32,7 @@ private:
     QString memoire;    // Pour la fonction rétablir.
 
     static MainWindow * instanceUnique;
-    Ui::MainWindow *ui;
-    Pile * pile;
+    Ui::MainWindow * ui;
 
     // Constructeurs et Destructeurs.
     MainWindow();

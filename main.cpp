@@ -1,8 +1,11 @@
-/* UV: LO21 - projet
- * Sujet: Calculatrice à notation polonaise inversée
- * Auteurs: Jiahan & Antoine Hars
- * File: main.cpp
- */
+/**
+\file main.cpp
+\author Jia Han & Antoine Hars
+\brief Instanciation de la calculatrice
+
+Ce fichier contient la déclaration de la fonction main pour l'instanciation de l'interface graphique.
+
+**/
 
 #include <QtGui/QApplication>
 
@@ -21,6 +24,8 @@
 #include "observablePile.h"
 #include "observateurMW.h"
 
+//! Fonction main.\n
+//! Instancie l'interface graphique de la calculatrice.
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

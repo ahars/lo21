@@ -6,9 +6,25 @@
 
 #include "pile.h"
 
+Pile * Pile::instanceUnique = 0;
+
+Pile & Pile::donneInstance()
+{
+    if (instanceUnique == 0)
+        instanceUnique = new Pile();
+    return * instanceUnique;
+}
+
+void Pile::libereInstance()
+{
+    if (instanceUnique != 0)
+        delete instanceUnique;
+    instanceUnique = 0;
+}
+
 // Constructeur.
-Pile::Pile(const int maximum):
-    max(maximum),
+Pile::Pile():
+    max(100),
     n(0)
 {
     tab = new Constante * [max];

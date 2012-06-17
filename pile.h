@@ -19,10 +19,17 @@ private:
     int max;
     int n;
     Constante ** tab;
+    static Pile * instanceUnique;
+    Pile();
+    Pile(const Pile &);
+    //explicit Pile(QWidget * parent = 0);
+    virtual ~Pile();
+    void operator=(const Pile &);
 
 public:
-    Pile(const int maximum = 10);
-    ~Pile();
+    static Pile & donneInstance();
+    static void libereInstance();
+
     int getMax() const { return max; }
     int getN() const { return n; }
     void setN(const int nb) { n = nb; }
