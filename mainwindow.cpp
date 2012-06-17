@@ -4,13 +4,13 @@
  * File: mainwindow.cpp
  */
 
+//    ui->listWidget->addItem("7");
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
 MainWindow * MainWindow::instanceUnique = 0;
-
 Pile & pile = Pile::donneInstance();
-
 FactoryConstante fac;
 
 // Donne instance du Singleton.
@@ -49,7 +49,7 @@ MainWindow::MainWindow(QWidget * parent) :
     ui(new Ui::MainWindow),
     test(0),
     com(0),
-    type("rad"),
+    type("radian"),
     mode("entier")
 {
     ui->setupUi(this);
@@ -83,6 +83,7 @@ MainWindow::MainWindow(QWidget * parent) :
     ui->buttonAnnuler->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
     ui->buttonRetablir->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y));
     ui->buttonEVAL->setShortcut(QKeySequence(Qt::Key_Tab));
+    ui->buttonCLEAR->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_C));
 
 
     // Connections.
@@ -125,10 +126,23 @@ MainWindow::MainWindow(QWidget * parent) :
     QObject::connect(ui->buttonMEAN, SIGNAL(clicked()), this, SLOT(meanPressed()));
     QObject::connect(ui->buttonDROP, SIGNAL(clicked()), this, SLOT(dropPressed()));
     QObject::connect(ui->buttonDUP, SIGNAL(clicked()), this, SLOT(dupPressed()));
+    QObject::connect(ui->buttonPOW, SIGNAL(clicked()), this, SLOT(powPressed()));
+    QObject::connect(ui->buttonMOD, SIGNAL(clicked()), this, SLOT(modPressed()));
+    QObject::connect(ui->buttonSIGN, SIGNAL(clicked()), this, SLOT(signPressed()));
+    QObject::connect(ui->buttonINV, SIGNAL(clicked()), this, SLOT(invPressed()));
+    QObject::connect(ui->buttonSQRT, SIGNAL(clicked()), this, SLOT(sqrtPressed()));
+    QObject::connect(ui->buttonSQR, SIGNAL(clicked()), this, SLOT(sqrPressed()));
+    QObject::connect(ui->buttonCUBE, SIGNAL(clicked()), this, SLOT(cubePressed()));
 
     QObject::connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(about()));
     QObject::connect(ui->actionRad, SIGNAL(triggered()), this, SLOT(radSelected()));
     QObject::connect(ui->actionDeg, SIGNAL(triggered()), this, SLOT(degSelected()));
+    QObject::connect(ui->actionEnt, SIGNAL(triggered()), this, SLOT(entierPressed()));
+    QObject::connect(ui->actionRationnel, SIGNAL(triggered()), this, SLOT(rationnelPressed()));
+    QObject::connect(ui->actionRe, SIGNAL(triggered()), this, SLOT(reelPressed()));
+    QObject::connect(ui->actionOui, SIGNAL(triggered()), this, SLOT(complexePressed()));
+    QObject::connect(ui->actionNon, SIGNAL(triggered()), this, SLOT(nonComplexePressed()));
+
 }
 
 void MainWindow::miseAJour()
@@ -1532,164 +1546,152 @@ void MainWindow::clearPressed()
 {
     ui->inputLine->setText("");
 
-    for(int i=0;i<pile.getN();i++){
+    for (int i = 0; i < pile.getN(); i++)
         pile.depiler();  //vider la pile
-    }
 }
 
 // Appui sur le bouton SWAP.
 void MainWindow::swapPressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"SWAP");
+    ui->inputLine->setText(ui->inputLine->text() + "SWAP");
 }
 
 // Appui sur le bouton SUM.
 void MainWindow::sumPressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"SUM");
+    ui->inputLine->setText(ui->inputLine->text() + "SUM");
 }
 
 // Appui sur le bouton MEAN.
 void MainWindow::meanPressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"MEAN");
+    ui->inputLine->setText(ui->inputLine->text() + "MEAN");
 }
 
 // Appui sur le bouton DUP.
 void MainWindow::dupPressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"DUP");
+    ui->inputLine->setText(ui->inputLine->text() + "DUP");
 }
 
 // Appui sur le bouton DROP.
 void MainWindow::dropPressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"DROP");
+    ui->inputLine->setText(ui->inputLine->text() + "DROP");
 }
 
 // Appui sur le bouton SPACE.
 void MainWindow::spacePressed()
 {
-     ui->inputLine->setText(ui->inputLine->text()+" ");
+     ui->inputLine->setText(ui->inputLine->text() + " ");
 }
 
 // Appui sur le bouton $.
 void MainWindow::dollarPressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"$");
+    ui->inputLine->setText(ui->inputLine->text() + "$");
 }
 
 // Appui sur le bouton +.
 void MainWindow::plusPressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"+");
+    ui->inputLine->setText(ui->inputLine->text() + "+");
 }
 
 // Appui sur le bouton -.
 void MainWindow::dimPressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"-");
+    ui->inputLine->setText(ui->inputLine->text() + "-");
 }
 
 // Appui sur le bouton *.
 void MainWindow::multPressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"*");
+    ui->inputLine->setText(ui->inputLine->text() + "*");
 }
 
 // Appui sur le bouton /.
 void MainWindow::divPressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"/");
+    ui->inputLine->setText(ui->inputLine->text() + "/");
 }
 
 // Appui sur le bouton '.
-void MainWindow::ExpressionPressed()
+void MainWindow::expressionPressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"'");
+    ui->inputLine->setText(ui->inputLine->text() + "'");
 }
 
 // Appui sur le bouton 0.
 void MainWindow::num0Pressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"0");
-//    ui->listWidget->addItem("0");
+    ui->inputLine->setText(ui->inputLine->text() + "0");
 }
 
 // Appui sur le bouton 1.
 void MainWindow::num1Pressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"1");
-//    ui->listWidget->addItem("1");
+    ui->inputLine->setText(ui->inputLine->text() + "1");
 }
 
 // Appui sur le bouton 2.
 void MainWindow::num2Pressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"2");
-//    ui->listWidget->addItem("2");
+    ui->inputLine->setText(ui->inputLine->text() + "2");
 }
 
 // Appui sur le bouton 3.
 void MainWindow::num3Pressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"3");
-//    ui->listWidget->addItem("3");
-
+    ui->inputLine->setText(ui->inputLine->text() + "3");
 }
 
 // Appui sur le bouton 4.
 void MainWindow::num4Pressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"4");
-//    ui->listWidget->addItem("4");
+    ui->inputLine->setText(ui->inputLine->text() + "4");
 }
 
 // Appui sur le bouton 5.
 void MainWindow::num5Pressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"5");
-//    ui->listWidget->addItem("5");
+    ui->inputLine->setText(ui->inputLine->text() + "5");
 }
 
 // Appui sur le bouton 6.
 void MainWindow::num6Pressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"6");
-//    ui->listWidget->addItem("6");
+    ui->inputLine->setText(ui->inputLine->text() + "6");
 }
 
 // Appui sur le bouton 7.
 void MainWindow::num7Pressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"7");
-//    ui->listWidget->addItem("7");
+    ui->inputLine->setText(ui->inputLine->text() + "7");
 }
 
 // Appui sur le bouton 8.
 void MainWindow::num8Pressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"8");
-//    ui->listWidget->addItem("8");
+    ui->inputLine->setText(ui->inputLine->text() + "8");
 }
 
 // Appui sur le bouton 9.
 void MainWindow::num9Pressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"9");
-//    ui->listWidget->addItem("9");
+    ui->inputLine->setText(ui->inputLine->text() + "9");
 }
 
 // Appui sur le bouton .
 void MainWindow::pointPressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+".");
+    ui->inputLine->setText(ui->inputLine->text() + ".");
 }
 
 // Appui sur le bouton !.
 void MainWindow::factPressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"!");
+    ui->inputLine->setText(ui->inputLine->text() + "!");
 }
 
 // Appui sur le bouton ABOUT du menu.
@@ -1703,61 +1705,124 @@ void MainWindow::about()
 // Appui sur le bouton SIN.
 void MainWindow::sinPressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"sin");
+    ui->inputLine->setText(ui->inputLine->text() + "sin");
 }
 
 // Appui sur le bouton COS.
 void MainWindow::cosPressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"cos");
+    ui->inputLine->setText(ui->inputLine->text() + "cos");
 }
 
 // Appui sur le bouton TAN.
 void MainWindow::tanPressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"tan");
+    ui->inputLine->setText(ui->inputLine->text() + "tan");
 }
 
 // Appui sur le bouton SINH.
 void MainWindow::sinhPressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"sinh");
+    ui->inputLine->setText(ui->inputLine->text() + "sinh");
 }
 
 // Appui sur le bouton COSH.
 void MainWindow::coshPressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"cosh");
+    ui->inputLine->setText(ui->inputLine->text() + "cosh");
 }
 
 // Appui sur le bouton TANH.
 void MainWindow::tanhPressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"tanh");
+    ui->inputLine->setText(ui->inputLine->text() + "tanh");
 }
 
 // Appui sur le bouton LOG.
 void MainWindow::logPressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"log");
+    ui->inputLine->setText(ui->inputLine->text() + "log");
 }
 
 // Appui sur le bouton LN.
 void MainWindow::lnPressed()
 {
-    ui->inputLine->setText(ui->inputLine->text()+"ln");
+    ui->inputLine->setText(ui->inputLine->text() + "ln");
 }
 
 // basculer en radian.
 void MainWindow::radSelected()
 {
-    ui->RadouDeg->setText("rad");
-    type = "rad";
+    ui->RadouDeg->setText("radian");
+    type = "radian";
 }
 
 // basculer en degrès.
 void MainWindow::degSelected()
 {
-    ui->RadouDeg->setText("deg");
-    type = "deg";
+    ui->RadouDeg->setText("degres");
+    type = "degres";
+}
+
+void MainWindow::cubePressed()
+{
+    ui->inputLine->setText(ui->inputLine->text() + "CUBE");
+}
+
+void MainWindow::sqrPressed()
+{
+    ui->inputLine->setText(ui->inputLine->text() + "SQR");
+}
+
+void MainWindow::sqrtPressed()
+{
+    ui->inputLine->setText(ui->inputLine->text() + "SQRT");
+}
+
+void MainWindow::invPressed()
+{
+    ui->inputLine->setText(ui->inputLine->text() + "INV");
+}
+
+void MainWindow::signPressed()
+{
+    ui->inputLine->setText(ui->inputLine->text() + "SIGN");
+}
+
+void MainWindow::modPressed()
+{
+    ui->inputLine->setText(ui->inputLine->text() + "%");
+}
+
+void MainWindow::powPressed()
+{
+    ui->inputLine->setText(ui->inputLine->text() + "POW");
+}
+
+void MainWindow::nonComplexePressed()
+{
+    ui->comOuiNon->setText("non");
+}
+
+void MainWindow::complexePressed()
+{
+    ui->comOuiNon->setText("oui");
+}
+
+void MainWindow::reelPressed()
+{
+    ui->mode->setText("reel");
+    mode = "reel";
+}
+
+void MainWindow::rationnelPressed()
+{
+    ui->mode->setText("rationnel");
+    mode = "rationnel";
+}
+
+void MainWindow::entierPressed()
+{
+    ui->mode->setText("entier");
+    mode = "entier";
 }

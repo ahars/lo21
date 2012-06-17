@@ -9,6 +9,7 @@
 
 #include <QMainWindow>
 #include <QMessageBox>
+#include <QtGui>
 
 #include "operateur.h"
 #include "pile.h"
@@ -60,36 +61,48 @@ private slots:
     void num7Pressed();
     void num8Pressed();
     void num9Pressed();
-    void pointPressed();    // .
-    void plusPressed();     // +
-    void dimPressed();      // -
-    void multPressed();     // *
-    void divPressed();      // /
-    void spacePressed();    // SPACE
-    void about();           // Information sur ce projet.
-    void entrerPressed();   // =
-    void dollarPressed();   // $
-    void ExpressionPressed();
-    void retablirPressed(); // Rétablir
-    void annulerPressed();  // Annuler
-    void clearPressed();
-    void factPressed();     // !
-    void sinPressed();      // sin
-    void cosPressed();      // cos
-    void tanPressed();      // tan
-    void sinhPressed();     // sinh
-    void coshPressed();     // cosh
-    void tanhPressed();     // tanh
-    void logPressed();      // log
-    void lnPressed();       // ln
-    void swapPressed();     // SWAP num x et num y dans la pile.
-    void sumPressed();      // Somme des x premiers éléments de la pile.
-    void meanPressed();     // Moyenne des x premiers éléments de la pile.
-    void dupPressed();      // Duplique le premier élément de la pile.
-    void dropPressed();     // Supprime le premier élément de la pile.
-    void radSelected();     // Basculer en radian.
-    void degSelected();     // Basculer en degrès.
-    void evalPressed();     // Évaluation d'une expression.
+    void pointPressed();        // .
+    void plusPressed();         // +
+    void dimPressed();          // -
+    void multPressed();         // *
+    void divPressed();          // /
+    void dollarPressed();       // $
+    void spacePressed();        // SPACE
+    void about();               // Information sur ce projet.
+    void entrerPressed();       // =
+    void clearPressed();        // Clear.
+    void annulerPressed();      // Annuler
+    void retablirPressed();     // Rétablir
+    void factPressed();         // !
+    void sinPressed();          // sin
+    void cosPressed();          // cos
+    void tanPressed();          // tan
+    void sinhPressed();         // sinh
+    void coshPressed();         // cosh
+    void tanhPressed();         // tanh
+    void logPressed();          // log
+    void lnPressed();           // ln
+    void swapPressed();         // SWAP num x et num y dans la pile.
+    void sumPressed();          // Somme des x premiers éléments de la pile.
+    void meanPressed();         // Moyenne des x premiers éléments de la pile.
+    void dupPressed();          // Duplique le premier élément de la pile.
+    void dropPressed();         // Supprime le premier élément de la pile.
+    void radSelected();         // Basculer en radian.
+    void degSelected();         // Basculer en degrès.
+    void entierPressed();       // Changer le type en entier.
+    void rationnelPressed();    // Changer le type en rationnel.
+    void reelPressed();         // Changer le type en réel.
+    void complexePressed();     // Changer le type en non complexe.
+    void nonComplexePressed();  // Changer le type en non complexe.
+    void expressionPressed();   // '
+    void evalPressed();         // Évaluation d'une expression.
+    void powPressed();          // POW
+    void modPressed();          // %
+    void signPressed();         // SIGN
+    void invPressed();          // INV
+    void sqrtPressed();         // SQRT
+    void sqrPressed();          // SQR
+    void cubePressed();         // CUBE
 
 };
 

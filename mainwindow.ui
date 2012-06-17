@@ -97,7 +97,10 @@
      <item row="4" column="1">
       <widget class="QLineEdit" name="comOuiNon">
        <property name="text">
-        <string>Non</string>
+        <string>non</string>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -366,7 +369,7 @@
      <item row="5" column="1">
       <widget class="QLineEdit" name="RadouDeg">
        <property name="text">
-        <string>rad</string>
+        <string>radian</string>
        </property>
        <property name="readOnly">
         <bool>true</bool>
@@ -525,7 +528,7 @@
   </action>
   <action name="actionRad">
    <property name="text">
-    <string>radiant</string>
+    <string>radian</string>
    </property>
   </action>
   <action name="actionReel">
@@ -535,7 +538,7 @@
   </action>
   <action name="actionDeg">
    <property name="text">
-    <string>degre</string>
+    <string>degres</string>
    </property>
   </action>
   <action name="actionOui">
@@ -550,17 +553,17 @@
   </action>
   <action name="actionEnt">
    <property name="text">
-    <string>entiere</string>
+    <string>entier</string>
    </property>
   </action>
   <action name="actionRationnel">
    <property name="text">
-    <string>rationnelle</string>
+    <string>rationnel</string>
    </property>
   </action>
   <action name="actionRe">
    <property name="text">
-    <string>reelle</string>
+    <string>reel</string>
    </property>
   </action>
  </widget>
