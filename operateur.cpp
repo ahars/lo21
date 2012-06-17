@@ -12,13 +12,27 @@ FactoryConstante fact; //cree factory
 
 void Operateur::opSWAP(Pile & p)
 {
-    int val1 = p.depiler()->getEntier();
-    int val2 = p.depiler()->getEntier();
+    QMessageBox message;
+    int val1, val2;
+
+    if (!p.pileVide())
+        val1 = p.depiler()->getEntier();
+    else
+        message.setText("");
+
+    if (!p.pileVide())
+        val2 = p.depiler()->getEntier();
+    else
+
+
 
     Constante * temp = p.getTab(val1 - 1);
     p.setTab(val1 - 1, p.getTab(val2 - 1));
     p.setTab(val1 - 2, temp);
 }
+
+
+
 
 void Operateur::opSUM(Pile & p, QString mode, int com)
 {
@@ -35,7 +49,7 @@ void Operateur::opSUM(Pile & p, QString mode, int com)
                     sum += p.getTab(i)->getEntier();
                 if (p.getTab(i)->getType() == "reel")
                     sum += p.getTab(i)->getReel();
-                if (p.getTab(i)->getType() == "rationnelle")
+                if (p.getTab(i)->getType() == "rationnel")
                 {
                     Constante * ration = p.getTab(i);
                     sum += ration->getNumerateur() / ration->getDenominateur();
@@ -54,7 +68,7 @@ void Operateur::opSUM(Pile & p, QString mode, int com)
                     sum += (float) p.getTab(i)->getEntier();
                 if (p.getTab(i)->getType() == "reel")
                     sum += p.getTab(i)->getReel();
-                if (p.getTab(i)->getType() == "rationnelle")
+                if (p.getTab(i)->getType() == "rationnel")
                 {
                     Constante * ration = p.getTab(i);
                     sum += (float) ration->getNumerateur() / (float) ration->getDenominateur();
@@ -86,7 +100,7 @@ void Operateur::opSUM(Pile & p, QString mode, int com)
                 }
             }
 
-            Constante * rationn = fact.creeConstante("rationnelle", num, den);
+            Constante * rationn = fact.creeConstante("rationnel", num, den);
             p.setTab(0, rationn); //empiler le result a la premiere
         }
     }
@@ -104,7 +118,7 @@ void Operateur::opSUM(Pile & p, QString mode, int com)
                     sumR += p.getTab(i)->getPartieReelle()->getEntier();
                 if (p.getTab(i)->getPartieReelle()->getType() == "reel")
                     sumR += p.getTab(i)->getPartieReelle()->getReel();
-                if (p.getTab(i)->getPartieReelle()->getType() == "rationnelle")
+                if (p.getTab(i)->getPartieReelle()->getType() == "rationnel")
                     sumR += p.getTab(i)->getPartieReelle()->getNumerateur() / p.getTab(i)->getPartieReelle()->getDenominateur();
             }
 
@@ -115,7 +129,7 @@ void Operateur::opSUM(Pile & p, QString mode, int com)
                     sumV += p.getTab(i)->getPartieImaginaire()->getEntier();
                 if (p.getTab(i)->getPartieImaginaire()->getType() == "reel")
                     sumV += p.getTab(i)->getPartieImaginaire()->getReel();
-                if (p.getTab(i)->getPartieImaginaire()->getType() == "rationnelle")
+                if (p.getTab(i)->getPartieImaginaire()->getType() == "rationnel")
                     sumV += p.getTab(i)->getPartieImaginaire()->getNumerateur() / p.getTab(i)->getPartieImaginaire()->getDenominateur();
             }
 
@@ -135,7 +149,7 @@ void Operateur::opSUM(Pile & p, QString mode, int com)
                     sumR += (float) p.getTab(i)->getPartieReelle()->getEntier();
                 if (p.getTab(i)->getPartieReelle()->getType() == "reel")
                     sumR += p.getTab(i)->getPartieReelle()->getReel();
-                if (p.getTab(i)->getPartieReelle()->getType() == "rationnelle")
+                if (p.getTab(i)->getPartieReelle()->getType() == "rationnel")
                     sumR += (float) p.getTab(i)->getPartieReelle()->getNumerateur() / (float) p.getTab(i)->getPartieReelle()->getDenominateur();
             }
             // sum de partie virtuel
@@ -145,7 +159,7 @@ void Operateur::opSUM(Pile & p, QString mode, int com)
                     sumV += (float) p.getTab(i)->getPartieImaginaire()->getEntier();
                 if (p.getTab(i)->getPartieImaginaire()->getType() == "reel")
                     sumV += p.getTab(i)->getPartieImaginaire()->getReel();
-                if (p.getTab(i)->getPartieImaginaire()->getType() == "rationnelle")
+                if (p.getTab(i)->getPartieImaginaire()->getType() == "rationnel")
                     sumV += (float) p.getTab(i)->getPartieImaginaire()->getNumerateur() / (float) p.getTab(i)->getPartieImaginaire()->getDenominateur();
             }
             Constante * re = fact.creeConstante("reel", 0, 0, sumR);
@@ -182,7 +196,7 @@ void Operateur::opSUM(Pile & p, QString mode, int com)
                 }
             }
 
-            Constante * re = fact.creeConstante("rationnelle", num, den);
+            Constante * re = fact.creeConstante("rationnel", num, den);
 
             // sum de partie virtuel
             num = virtuel->getNumerateur();
@@ -203,7 +217,7 @@ void Operateur::opSUM(Pile & p, QString mode, int com)
                     den /= i;
                 }
             }
-            Constante * vi = fact.creeConstante("rationnelle", num, den);
+            Constante * vi = fact.creeConstante("rationnel", num, den);
             Constante * complexe = fact.creeConstante("complexe", 0, 0, 0, re, vi);
             p.setTab(0, complexe); // empiler le result a la premiere
         }
@@ -235,7 +249,7 @@ void Operateur::opMEAN(Pile & p, QString mode, int com)
                     sum += p.getTab(i)->getEntier();
                 if (p.getTab(i)->getType() == "reel")
                     sum += p.getTab(i)->getReel();
-                if (p.getTab(i)->getType() == "rationnelle")
+                if (p.getTab(i)->getType() == "rationnel")
                 {
                     Constante * ration = p.getTab(i);
                     sum += ration->getNumerateur() / ration->getDenominateur();
@@ -254,7 +268,7 @@ void Operateur::opMEAN(Pile & p, QString mode, int com)
                     sum += (float) p.getTab(i)->getEntier();
                 if (p.getTab(i)->getType() == "reel")
                     sum += p.getTab(i)->getReel();
-                if (p.getTab(i)->getType() == "rationnelle")
+                if (p.getTab(i)->getType() == "rationnel")
                 {
                     Constante * ration = p.getTab(i);
                     sum += (float) ration->getNumerateur() / (float) ration->getDenominateur();
@@ -287,7 +301,7 @@ void Operateur::opMEAN(Pile & p, QString mode, int com)
                 }
             }
 
-            Constante * rationn = fact.creeConstante("rationnelle", num, den);
+            Constante * rationn = fact.creeConstante("rationnel", num, den);
             p.setTab(0, rationn); // empiler le result a la premiere
         }
     }
@@ -304,7 +318,7 @@ void Operateur::opMEAN(Pile & p, QString mode, int com)
                     sumR += p.getTab(i)->getPartieReelle()->getEntier();
                 if (p.getTab(i)->getPartieReelle()->getType() == "reel")
                     sumR += p.getTab(i)->getPartieReelle()->getReel();
-                if (p.getTab(i)->getPartieReelle()->getType() == "rationnelle")
+                if (p.getTab(i)->getPartieReelle()->getType() == "rationnel")
                     sumR += p.getTab(i)->getPartieReelle()->getNumerateur() / p.getTab(i)->getPartieReelle()->getDenominateur();
             }
             // sum de partie virtuel
@@ -314,7 +328,7 @@ void Operateur::opMEAN(Pile & p, QString mode, int com)
                     sumV += p.getTab(i)->getPartieImaginaire()->getEntier();
                 if (p.getTab(i)->getPartieImaginaire()->getType() == "reel")
                     sumV += p.getTab(i)->getPartieImaginaire()->getReel();
-                if (p.getTab(i)->getPartieImaginaire()->getType() == "rationnelle")
+                if (p.getTab(i)->getPartieImaginaire()->getType() == "rationnel")
                     sumV += p.getTab(i)->getPartieImaginaire()->getNumerateur() / p.getTab(i)->getPartieImaginaire()->getDenominateur();
             }
             Constante * re = fact.creeConstante("entier", sumR / val1);
@@ -333,7 +347,7 @@ void Operateur::opMEAN(Pile & p, QString mode, int com)
                     sumR += (float) p.getTab(i)->getPartieReelle()->getEntier();
                 if (p.getTab(i)->getPartieReelle()->getType() == "reel")
                     sumR += p.getTab(i)->getPartieReelle()->getReel();
-                if (p.getTab(i)->getPartieReelle()->getType() == "rationnelle")
+                if (p.getTab(i)->getPartieReelle()->getType() == "rationnel")
                     sumR += (float) p.getTab(i)->getPartieReelle()->getNumerateur() / (float) p.getTab(i)->getPartieReelle()->getDenominateur();
             }
             //sum de partie virtuel
@@ -343,7 +357,7 @@ void Operateur::opMEAN(Pile & p, QString mode, int com)
                     sumV += (float) p.getTab(i)->getPartieImaginaire()->getEntier();
                 if (p.getTab(i)->getPartieImaginaire()->getType() == "reel")
                     sumV += p.getTab(i)->getPartieImaginaire()->getReel();
-                if (p.getTab(i)->getPartieImaginaire()->getType() == "rationnelle")
+                if (p.getTab(i)->getPartieImaginaire()->getType() == "rationnel")
                     sumV += (float) p.getTab(i)->getPartieImaginaire()->getNumerateur() / (float) p.getTab(i)->getPartieImaginaire()->getDenominateur();
             }
             Constante * re = fact.creeConstante("reel", 0, 0, sumR / val1);
@@ -380,7 +394,7 @@ void Operateur::opMEAN(Pile & p, QString mode, int com)
                 }
             }
 
-            Constante * re = fact.creeConstante("rationnelle", num, den);
+            Constante * re = fact.creeConstante("rationnel", num, den);
 
             // sum de partie virtuel
             num = virtuel->getNumerateur();
@@ -402,7 +416,7 @@ void Operateur::opMEAN(Pile & p, QString mode, int com)
                     den /= i;
                 }
             }
-            Constante * vi = fact.creeConstante("rationnelle", num, den);
+            Constante * vi = fact.creeConstante("rationnel", num, den);
             Constante * complexe = fact.creeConstante("complexe", 0, 0, 0, re, vi);
             p.setTab(0, complexe); // empiler le result a la premiere
         }
@@ -450,7 +464,7 @@ void Operateur::opPlus(Pile & p, QString mode, int com)
                 if (p.getTab(p.getN() - 1)->getType() == "reel")
                     val1 = (int) p.depiler()->getReel();
                 else
-                    if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+                    if (p.getTab(p.getN() - 1)->getType() == "rationnel")
                     {
                         Constante * ration = p.depiler();
                         val1 = ration->getNumerateur() / ration->getDenominateur();
@@ -462,7 +476,7 @@ void Operateur::opPlus(Pile & p, QString mode, int com)
                     if (p.getTab(p.getN() - 1)->getType() == "reel")
                         val2 = (int) p.depiler()->getReel();
                     else
-                        if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+                        if (p.getTab(p.getN() - 1)->getType() == "rationnel")
                         {
                             Constante * ration = p.depiler();
                             val2 = ration->getNumerateur() / ration->getDenominateur();
@@ -482,7 +496,7 @@ void Operateur::opPlus(Pile & p, QString mode, int com)
                 if (p.getTab(p.getN() - 1)->getType() == "reel")
                     val1 = p.depiler()->getReel();
                 else
-                    if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+                    if (p.getTab(p.getN() - 1)->getType() == "rationnel")
                     {
                         Constante * ration = p.depiler();
                         val1 = ration->getNumerateur() / ration->getDenominateur();
@@ -494,7 +508,7 @@ void Operateur::opPlus(Pile & p, QString mode, int com)
                 if (p.getTab(p.getN() - 1)->getType() == "reel")
                     val2 = p.depiler()->getReel();
                 else
-                    if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+                    if (p.getTab(p.getN() - 1)->getType() == "rationnel")
                     {
                         Constante * ration = p.depiler();
                         val2 = ration->getNumerateur() / ration->getDenominateur();
@@ -527,7 +541,7 @@ void Operateur::opPlus(Pile & p, QString mode, int com)
                 }
             }
 
-            Constante * rationn = fact.creeConstante("rationnelle", num1, den1);
+            Constante * rationn = fact.creeConstante("rationnel", num1, den1);
             p.empiler(rationn);
         }
     }
@@ -547,7 +561,7 @@ void Operateur::opPlus(Pile & p, QString mode, int com)
                 reelVal1 = partieReel->getEntier();
             if (partieReel->getType() == "reel")
                 reelVal1 = partieReel->getReel();
-            if (partieReel->getType() == "rationnelle")
+            if (partieReel->getType() == "rationnel")
                 reelVal1 = partieReel->getNumerateur() / partieReel->getDenominateur();
 
             // partie virtuel
@@ -555,7 +569,7 @@ void Operateur::opPlus(Pile & p, QString mode, int com)
                 virtuelVal1 = partieVir->getEntier();
             if (partieVir->getType() == "reel")
                 virtuelVal1 = partieVir->getReel();
-            if (partieVir->getType() == "rationnelle")
+            if (partieVir->getType() == "rationnel")
                 virtuelVal1 = partieVir->getNumerateur() / partieVir->getDenominateur();
 
             // deuxieme constante
@@ -568,7 +582,7 @@ void Operateur::opPlus(Pile & p, QString mode, int com)
                 reelVal2 = partieReel->getEntier();
             if (partieReel->getType() == "reel")
                 reelVal2 = partieReel->getReel();
-            if (partieReel->getType() == "rationnelle")
+            if (partieReel->getType() == "rationnel")
                 reelVal2 = partieReel->getNumerateur() / partieReel->getDenominateur();
 
             //partie virtuel
@@ -576,7 +590,7 @@ void Operateur::opPlus(Pile & p, QString mode, int com)
                 virtuelVal2 = partieVir->getEntier();
             if (partieVir->getType() == "reel")
                 virtuelVal2 = partieVir->getReel();
-            if (partieVir->getType() == "rationnelle")
+            if (partieVir->getType() == "rationnel")
                 virtuelVal2 = partieVir->getNumerateur() / partieVir->getDenominateur();
 
             Constante * reel = fact.creeConstante("entier", reelVal1 + reelVal2);
@@ -593,7 +607,7 @@ void Operateur::opPlus(Pile & p, QString mode, int com)
                 reelVal1 = (float) partieReel->getEntier();
             if (partieReel->getType() == "reel")
                 reelVal1 = partieReel->getReel();
-            if (partieReel->getType() == "rationnelle")
+            if (partieReel->getType() == "rationnel")
                 reelVal1 = (float) partieReel->getNumerateur() / (float) partieReel->getDenominateur();
 
             // partie virtuel
@@ -601,7 +615,7 @@ void Operateur::opPlus(Pile & p, QString mode, int com)
                 virtuelVal1 = (float) partieVir->getEntier();
             if (partieVir->getType() == "reel")
                 virtuelVal1 = partieVir->getReel();
-            if (partieVir->getType() == "rationnelle")
+            if (partieVir->getType() == "rationnel")
                 virtuelVal1 = (float) partieVir->getNumerateur() / (float) partieVir->getDenominateur();
 
             // deuxieme constante
@@ -614,7 +628,7 @@ void Operateur::opPlus(Pile & p, QString mode, int com)
                 reelVal2 = (float) partieReel->getEntier();
             if (partieReel->getType() == "reel")
                 reelVal2 = partieReel->getReel();
-            if (partieReel->getType() == "rationnelle")
+            if (partieReel->getType() == "rationnel")
                 reelVal2 = (float) partieReel->getNumerateur() / (float) partieReel->getDenominateur();
 
             // partie virtuel
@@ -622,7 +636,7 @@ void Operateur::opPlus(Pile & p, QString mode, int com)
                 virtuelVal2 = (float) partieVir->getEntier();
             if (partieVir->getType() == "reel")
                 virtuelVal2 = partieVir->getReel();
-            if (partieVir->getType() == "rationnelle")
+            if (partieVir->getType() == "rationnel")
                 virtuelVal2 = (float) partieVir->getNumerateur() / (float) partieVir->getDenominateur();
 
             Constante * reel = fact.creeConstante("reel", 0, 0, reelVal1 + reelVal2);
@@ -679,8 +693,8 @@ void Operateur::opPlus(Pile & p, QString mode, int com)
                 }
             }
 
-            Constante * reel = fact.creeConstante("rationnelle", reelnum1, reelden1);
-            Constante * virtuel = fact.creeConstante("rationnelle", virtuelnum1, virtuelden1);
+            Constante * reel = fact.creeConstante("rationnel", reelnum1, reelden1);
+            Constante * virtuel = fact.creeConstante("rationnel", virtuelnum1, virtuelden1);
             Constante * complexe = fact.creeConstante("complexe", 0, 0, 0, reel, virtuel);
             p.empiler(complexe);
         }
@@ -705,7 +719,7 @@ void Operateur::opDim(Pile & p, QString mode, int com)
                 if (p.getTab(p.getN() - 1)->getType() == "reel")
                     val1 = p.depiler()->getReel();
                 else
-                    if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+                    if (p.getTab(p.getN() - 1)->getType() == "rationnel")
                     {
                         Constante * ration = p.depiler();
                         val1 = ration->getNumerateur() / ration->getDenominateur();
@@ -717,7 +731,7 @@ void Operateur::opDim(Pile & p, QString mode, int com)
                 if (p.getTab(p.getN() - 1)->getType() == "reel")
                     val2 = p.depiler()->getReel();
                 else
-                    if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+                    if (p.getTab(p.getN() - 1)->getType() == "rationnel")
                     {
                         Constante * ration = p.depiler();
                         val2 = ration->getNumerateur() / ration->getDenominateur();
@@ -737,7 +751,7 @@ void Operateur::opDim(Pile & p, QString mode, int com)
                 if (p.getTab(p.getN() - 1)->getType() == "reel")
                     val1 = p.depiler()->getReel();
                 else
-                    if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+                    if (p.getTab(p.getN() - 1)->getType() == "rationnel")
                     {
                         Constante * ration = p.depiler();
                         val1 = ration->getNumerateur() / ration->getDenominateur();
@@ -750,7 +764,7 @@ void Operateur::opDim(Pile & p, QString mode, int com)
                 if (p.getTab(p.getN() - 1)->getType() == "reel")
                     val2 = p.depiler()->getReel();
                 else
-                    if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+                    if (p.getTab(p.getN() - 1)->getType() == "rationnel")
                     {
                         Constante * ration = p.depiler();
                         val2 = ration->getNumerateur() / ration->getDenominateur();
@@ -784,7 +798,7 @@ void Operateur::opDim(Pile & p, QString mode, int com)
                 }
             }
 
-            Constante * rationn = fact.creeConstante("rationnelle", num1, den1);
+            Constante * rationn = fact.creeConstante("rationnel", num1, den1);
             p.empiler(rationn);
         }
     }
@@ -802,7 +816,7 @@ void Operateur::opDim(Pile & p, QString mode, int com)
                 reelVal1 = partieReel->getEntier();
             if (partieReel->getType() == "reel")
                 reelVal1 = partieReel->getReel();
-            if (partieReel->getType() == "rationnelle")
+            if (partieReel->getType() == "rationnel")
                 reelVal1 = partieReel->getNumerateur() / partieReel->getDenominateur();
 
             // partie virtuel
@@ -810,7 +824,7 @@ void Operateur::opDim(Pile & p, QString mode, int com)
                 virtuelVal1 = partieVir->getEntier();
             if (partieVir->getType() == "reel")
                 virtuelVal1 = partieVir->getReel();
-            if (partieVir->getType() == "rationnelle")
+            if (partieVir->getType() == "rationnel")
                 virtuelVal1 = partieVir->getNumerateur() / partieVir->getDenominateur();
 
             // deuxieme constante
@@ -823,7 +837,7 @@ void Operateur::opDim(Pile & p, QString mode, int com)
                 reelVal2 = partieReel->getEntier();
             if (partieReel->getType() == "reel")
                 reelVal2 = partieReel->getReel();
-            if(partieReel->getType()=="rationnelle")
+            if(partieReel->getType()=="rationnel")
                 reelVal2 = partieReel->getNumerateur() / partieReel->getDenominateur();
 
             // partie virtuel
@@ -831,7 +845,7 @@ void Operateur::opDim(Pile & p, QString mode, int com)
                 virtuelVal2 = partieVir->getEntier();
             if (partieVir->getType() == "reel")
                 virtuelVal2 = partieVir->getReel();
-            if (partieVir->getType() == "rationnelle")
+            if (partieVir->getType() == "rationnel")
                 virtuelVal2 = partieVir->getNumerateur() / partieVir->getDenominateur();
 
             Constante * reel = fact.creeConstante("entier", reelVal2 - reelVal1);
@@ -848,7 +862,7 @@ void Operateur::opDim(Pile & p, QString mode, int com)
                 reelVal1 = (float) partieReel->getEntier();
             if (partieReel->getType() == "reel")
                 reelVal1 = partieReel->getReel();
-            if (partieReel->getType() == "rationnelle")
+            if (partieReel->getType() == "rationnel")
                 reelVal1 = (float) partieReel->getNumerateur() / (float) partieReel->getDenominateur();
 
             // partie virtuel
@@ -856,7 +870,7 @@ void Operateur::opDim(Pile & p, QString mode, int com)
                 virtuelVal1 = (float) partieVir->getEntier();
             if (partieVir->getType() == "reel")
                 virtuelVal1 = partieVir->getReel();
-            if (partieVir->getType() == "rationnelle")
+            if (partieVir->getType() == "rationnel")
                 virtuelVal1 = (float) partieVir->getNumerateur() / (float) partieVir->getDenominateur();
 
             // deuxieme constante
@@ -869,7 +883,7 @@ void Operateur::opDim(Pile & p, QString mode, int com)
                 reelVal2 = (float) partieReel->getEntier();
             if (partieReel->getType() == "reel")
                 reelVal2 = partieReel->getReel();
-            if (partieReel->getType() == "rationnelle")
+            if (partieReel->getType() == "rationnel")
                 reelVal2 = (float) partieReel->getNumerateur() / (float) partieReel->getDenominateur();
 
             // partie virtuel
@@ -877,7 +891,7 @@ void Operateur::opDim(Pile & p, QString mode, int com)
                 virtuelVal2 = (float) partieVir->getEntier();
             if (partieVir->getType() == "reel")
                 virtuelVal2 = partieVir->getReel();
-            if (partieVir->getType() == "rationnelle")
+            if (partieVir->getType() == "rationnel")
                 virtuelVal2 = (float) partieVir->getNumerateur() / (float) partieVir->getDenominateur();
 
             Constante * reel = fact.creeConstante("reel", 0, 0, reelVal2 - reelVal1);
@@ -934,8 +948,8 @@ void Operateur::opDim(Pile & p, QString mode, int com)
                 }
             }
 
-            Constante * reel = fact.creeConstante("rationnelle", reelnum, reelden);
-            Constante * virtuel = fact.creeConstante("rationnelle", virtuelnum, virtuelden);
+            Constante * reel = fact.creeConstante("rationnel", reelnum, reelden);
+            Constante * virtuel = fact.creeConstante("rationnel", virtuelnum, virtuelden);
             Constante * complexe = fact.creeConstante("complexe", 0, 0, 0, reel, virtuel);
             p.empiler(complexe);
         }
@@ -958,7 +972,7 @@ void Operateur::opMult(Pile & p, QString mode, int com)
                 if (p.getTab(p.getN() - 1)->getType() == "reel")
                     val1 = p.depiler()->getReel();
                 else
-                    if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+                    if (p.getTab(p.getN() - 1)->getType() == "rationnel")
                     {
                         Constante * ration = p.depiler();
                         val1 = ration->getNumerateur() / ration->getDenominateur();
@@ -971,7 +985,7 @@ void Operateur::opMult(Pile & p, QString mode, int com)
                 if (p.getTab(p.getN() - 1)->getType() == "reel")
                     val2 = p.depiler()->getReel();
                 else
-                    if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+                    if (p.getTab(p.getN() - 1)->getType() == "rationnel")
                     {
                         Constante * ration = p.depiler();
                         val2 = ration->getNumerateur() / ration->getDenominateur();
@@ -993,7 +1007,7 @@ void Operateur::opMult(Pile & p, QString mode, int com)
                 if (p.getTab(p.getN() - 1)->getType() == "reel")
                     val1 = p.depiler()->getReel();
                 else
-                    if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+                    if (p.getTab(p.getN() - 1)->getType() == "rationnel")
                     {
                         Constante * ration = p.depiler();
                         val1 = ration->getNumerateur() / ration->getDenominateur();
@@ -1005,7 +1019,7 @@ void Operateur::opMult(Pile & p, QString mode, int com)
                 if (p.getTab(p.getN() - 1)->getType() == "reel")
                     val2 = p.depiler()->getReel();
                 else
-                    if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+                    if (p.getTab(p.getN() - 1)->getType() == "rationnel")
                     {
                         Constante * ration = p.depiler();
                         val2 = ration->getNumerateur() / ration->getDenominateur();
@@ -1039,7 +1053,7 @@ void Operateur::opMult(Pile & p, QString mode, int com)
                 }
             }
 
-            Constante * rationn = fact.creeConstante("rationnelle", num1, den1);
+            Constante * rationn = fact.creeConstante("rationnel", num1, den1);
             p.empiler(rationn);
         }
     }
@@ -1057,7 +1071,7 @@ void Operateur::opMult(Pile & p, QString mode, int com)
                 reelVal1 = partieReel->getEntier();
             if (partieReel->getType() == "reel")
                 reelVal1 = partieReel->getReel();
-            if (partieReel->getType() == "rationnelle")
+            if (partieReel->getType() == "rationnel")
                 reelVal1 = partieReel->getNumerateur() / partieReel->getDenominateur();
 
             // partie virtuel
@@ -1065,7 +1079,7 @@ void Operateur::opMult(Pile & p, QString mode, int com)
                 virtuelVal1 = partieVir->getEntier();
             if (partieVir->getType() == "reel")
                 virtuelVal1 = partieVir->getReel();
-            if (partieVir->getType() == "rationnelle")
+            if (partieVir->getType() == "rationnel")
                 virtuelVal1 = partieVir->getNumerateur() / partieVir->getDenominateur();
 
             // deuxieme constante
@@ -1078,7 +1092,7 @@ void Operateur::opMult(Pile & p, QString mode, int com)
                 reelVal2 = partieReel->getEntier();
             if (partieReel->getType() == "reel")
                 reelVal2 = partieReel->getReel();
-            if (partieReel->getType() == "rationnelle")
+            if (partieReel->getType() == "rationnel")
                 reelVal2 = partieReel->getNumerateur() / partieReel->getDenominateur();
 
             //partie virtuel
@@ -1086,7 +1100,7 @@ void Operateur::opMult(Pile & p, QString mode, int com)
                 virtuelVal2 = partieVir->getEntier();
             if (partieVir->getType() == "reel")
                 virtuelVal2 = partieVir->getReel();
-            if (partieVir->getType() == "rationnelle")
+            if (partieVir->getType() == "rationnel")
                 virtuelVal2 = partieVir->getNumerateur() / partieVir->getDenominateur();
 
             Constante * reel = fact.creeConstante("entier", reelVal1 * reelVal2 - virtuelVal1 * virtuelVal2);
@@ -1103,7 +1117,7 @@ void Operateur::opMult(Pile & p, QString mode, int com)
                 reelVal1 = (float) partieReel->getEntier();
             if (partieReel->getType() == "reel")
                 reelVal1 = partieReel->getReel();
-            if (partieReel->getType() == "rationnelle")
+            if (partieReel->getType() == "rationnel")
                 reelVal1 = (float) partieReel->getNumerateur() / (float) partieReel->getDenominateur();
 
             // partie virtuel
@@ -1111,7 +1125,7 @@ void Operateur::opMult(Pile & p, QString mode, int com)
                 virtuelVal1 = (float) partieVir->getEntier();
             if (partieVir->getType() == "reel")
                 virtuelVal1 = partieVir->getReel();
-            if (partieVir->getType() == "rationnelle")
+            if (partieVir->getType() == "rationnel")
                 virtuelVal1 = (float) partieVir->getNumerateur() / (float) partieVir->getDenominateur();
 
             // deuxieme constante
@@ -1124,7 +1138,7 @@ void Operateur::opMult(Pile & p, QString mode, int com)
                 reelVal2 = (float) partieReel->getEntier();
             if (partieReel->getType() == "reel")
                 reelVal2 = partieReel->getReel();
-            if (partieReel->getType() == "rationnelle")
+            if (partieReel->getType() == "rationnel")
                 reelVal2 = (float) partieReel->getNumerateur() / (float) partieReel->getDenominateur();
 
             // partie virtuel
@@ -1132,7 +1146,7 @@ void Operateur::opMult(Pile & p, QString mode, int com)
                 virtuelVal2 = (float) partieVir->getEntier();
             if (partieVir->getType() == "reel")
                 virtuelVal2 = partieVir->getReel();
-            if (partieVir->getType() == "rationnelle")
+            if (partieVir->getType() == "rationnel")
                 virtuelVal2 = (float) partieVir->getNumerateur() / (float) partieVir->getDenominateur();
 
             Constante * reel = fact.creeConstante("reel", 0, 0, reelVal1 * reelVal2 - virtuelVal1 * virtuelVal2);
@@ -1190,8 +1204,8 @@ void Operateur::opMult(Pile & p, QString mode, int com)
                 }
             }
 
-            Constante * reel = fact.creeConstante("rationnelle", reelnum, reelden);
-            Constante * virtuel = fact.creeConstante("rationnelle", virtuelnum, virtuelden);
+            Constante * reel = fact.creeConstante("rationnel", reelnum, reelden);
+            Constante * virtuel = fact.creeConstante("rationnel", virtuelnum, virtuelden);
             Constante * complexe = fact.creeConstante("complexe", 0, 0, 0, reel, virtuel);
             p.empiler(complexe);
         }
@@ -1214,7 +1228,7 @@ void Operateur::opDiv(Pile & p, QString mode, int com)
                 if (p.getTab(p.getN() - 1)->getType() == "reel")
                     val1 = p.depiler()->getReel();
                 else
-                    if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+                    if (p.getTab(p.getN() - 1)->getType() == "rationnel")
                     {
                         Constante * ration = p.depiler();
                         val1 = ration->getNumerateur() / ration->getDenominateur();
@@ -1226,7 +1240,7 @@ void Operateur::opDiv(Pile & p, QString mode, int com)
                 if (p.getTab(p.getN() - 1)->getType() == "reel")
                     val2 = p.depiler()->getReel();
                 else
-                    if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+                    if (p.getTab(p.getN() - 1)->getType() == "rationnel")
                     {
                         Constante * ration = p.depiler();
                         val2 = ration->getNumerateur() / ration->getDenominateur();
@@ -1246,7 +1260,7 @@ void Operateur::opDiv(Pile & p, QString mode, int com)
                 if (p.getTab(p.getN() - 1)->getType() == "reel")
                     val1 = p.depiler()->getReel();
                 else
-                    if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+                    if (p.getTab(p.getN() - 1)->getType() == "rationnel")
                     {
                         Constante * ration = p.depiler();
                         val1 = ration->getNumerateur() / ration->getDenominateur();
@@ -1259,7 +1273,7 @@ void Operateur::opDiv(Pile & p, QString mode, int com)
                 if (p.getTab(p.getN() - 1)->getType() == "reel")
                     val2 = p.depiler()->getReel();
                 else
-                    if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+                    if (p.getTab(p.getN() - 1)->getType() == "rationnel")
                     {
                         Constante * ration = p.depiler();
                         val2 = ration->getNumerateur() / ration->getDenominateur();
@@ -1291,7 +1305,7 @@ void Operateur::opDiv(Pile & p, QString mode, int com)
                     den2 /= i;
                 }
             }
-            Constante * rationn = fact.creeConstante("rationnelle", num2, den2);
+            Constante * rationn = fact.creeConstante("rationnel", num2, den2);
             p.empiler(rationn);
         }
     }
@@ -1309,7 +1323,7 @@ void Operateur::opDiv(Pile & p, QString mode, int com)
                 reelVal1 = partieReel->getEntier();
             if (partieReel->getType() == "reel")
                 reelVal1 = partieReel->getReel();
-            if (partieReel->getType() == "rationnelle")
+            if (partieReel->getType() == "rationnel")
                 reelVal1 = partieReel->getNumerateur() / partieReel->getDenominateur();
 
             // partie virtuel
@@ -1317,7 +1331,7 @@ void Operateur::opDiv(Pile & p, QString mode, int com)
                 virtuelVal1 = partieVir->getEntier();
             if (partieVir->getType() == "reel")
                 virtuelVal1 = partieVir->getReel();
-            if (partieVir->getType() == "rationnelle")
+            if (partieVir->getType() == "rationnel")
                 virtuelVal1 = partieVir->getNumerateur() / partieVir->getDenominateur();
 
             // deuxieme constante
@@ -1330,7 +1344,7 @@ void Operateur::opDiv(Pile & p, QString mode, int com)
                 reelVal2 = partieReel->getEntier();
             if (partieReel->getType() == "reel")
                 reelVal2 = partieReel->getReel();
-            if (partieReel->getType() == "rationnelle")
+            if (partieReel->getType() == "rationnel")
                 reelVal2 = partieReel->getNumerateur() / partieReel->getDenominateur();
 
             // partie virtuel
@@ -1340,7 +1354,7 @@ void Operateur::opDiv(Pile & p, QString mode, int com)
             if (partieVir->getType() == "reel")
                 virtuelVal2 = partieVir->getReel();
 
-            if (partieVir->getType() == "rationnelle")
+            if (partieVir->getType() == "rationnel")
                 virtuelVal2 = partieVir->getNumerateur() / partieVir->getDenominateur();
 
             Constante * reel = fact.creeConstante("entier", (reelVal2 * reelVal1 + virtuelVal2 * virtuelVal1) / (virtuelVal2 * virtuelVal2 + virtuelVal1 * virtuelVal1));
@@ -1357,7 +1371,7 @@ void Operateur::opDiv(Pile & p, QString mode, int com)
                 reelVal1 = (float) partieReel->getEntier();
             if (partieReel->getType() == "reel")
                 reelVal1 = partieReel->getReel();
-            if (partieReel->getType() == "rationnelle")
+            if (partieReel->getType() == "rationnel")
                 reelVal1 = (float) partieReel->getNumerateur() / (float) partieReel->getDenominateur();
 
             // partie virtuel
@@ -1365,7 +1379,7 @@ void Operateur::opDiv(Pile & p, QString mode, int com)
                 virtuelVal1 = (float) partieVir->getEntier();
             if (partieVir->getType() == "reel")
                 virtuelVal1 = partieVir->getReel();
-            if (partieVir->getType() == "rationnelle")
+            if (partieVir->getType() == "rationnel")
                 virtuelVal1 = (float) partieVir->getNumerateur() / (float) partieVir->getDenominateur();
 
             // deuxieme constante
@@ -1378,7 +1392,7 @@ void Operateur::opDiv(Pile & p, QString mode, int com)
                 reelVal2 = (float) partieReel->getEntier();
             if (partieReel->getType() == "reel")
                 reelVal2 = partieReel->getReel();
-            if (partieReel->getType() == "rationnelle")
+            if (partieReel->getType() == "rationnel")
                 reelVal2 = (float) partieReel->getNumerateur() / (float) partieReel->getDenominateur();
 
             // partie virtuel
@@ -1386,7 +1400,7 @@ void Operateur::opDiv(Pile & p, QString mode, int com)
                 virtuelVal2 = (float) partieVir->getEntier();
             if (partieVir->getType() == "reel")
                 virtuelVal2 = partieVir->getReel();
-            if (partieVir->getType() == "rationnelle")
+            if (partieVir->getType() == "rationnel")
                 virtuelVal2 = (float) partieVir->getNumerateur() / (float) partieVir->getDenominateur();
 
             Constante * reel = fact.creeConstante("reel", 0, 0, (reelVal2 * reelVal1 + virtuelVal2 * virtuelVal1) / (virtuelVal2 * virtuelVal2 + virtuelVal1 * virtuelVal1));
@@ -1444,8 +1458,8 @@ void Operateur::opDiv(Pile & p, QString mode, int com)
                 }
             }
 
-            Constante * reel = fact.creeConstante("rationnelle", reelnum, reelden);
-            Constante * virtuel = fact.creeConstante("rationnelle", virtuelnum, virtuelden);
+            Constante * reel = fact.creeConstante("rationnel", reelnum, reelden);
+            Constante * virtuel = fact.creeConstante("rationnel", virtuelnum, virtuelden);
             Constante * complexe = fact.creeConstante("complexe", 0, 0, 0, reel, virtuel);
             p.empiler(complexe);
         }
@@ -1786,7 +1800,7 @@ void Operateur::opPOW(Pile & p, QString mode)
             if (p.getTab(p.getN() - 1)->getType() == "reel")
                 val1 = (int) p.depiler()->getReel();
             else
-                if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+                if (p.getTab(p.getN() - 1)->getType() == "rationnel")
                 {
                     Constante * ration = p.depiler();
                     val1 = ration->getNumerateur() / ration->getDenominateur();
@@ -1798,7 +1812,7 @@ void Operateur::opPOW(Pile & p, QString mode)
             if (p.getTab(p.getN() - 1)->getType() == "reel")
                 val2 = (int) p.depiler()->getReel();
             else
-                if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+                if (p.getTab(p.getN() - 1)->getType() == "rationnel")
                 {
                     Constante * ration = p.depiler();
                     val2 = ration->getNumerateur() / ration->getDenominateur();
@@ -1823,7 +1837,7 @@ void Operateur::opPOW(Pile & p, QString mode)
             if (p.getTab(p.getN() - 1)->getType() == "reel")
                 val1 = (int) p.depiler()->getReel();
             else
-                if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+                if (p.getTab(p.getN() - 1)->getType() == "rationnel")
                 {
                     Constante * ration = p.depiler();
                     val1 = ration->getNumerateur() / ration->getDenominateur();
@@ -1835,7 +1849,7 @@ void Operateur::opPOW(Pile & p, QString mode)
             if (p.getTab(p.getN() - 1)->getType() == "reel")
                 val2 = p.depiler()->getReel();
             else
-                if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+                if (p.getTab(p.getN() - 1)->getType() == "rationnel")
                 {
                     Constante * ration = p.depiler();
                     val2 = (float) ration->getNumerateur() / (float) ration->getDenominateur();
@@ -1876,7 +1890,7 @@ void Operateur::opPOW(Pile & p, QString mode)
                 resd /= i;
             }
         }
-         Constante * rationn = fact.creeConstante("rationnelle", resn, resd);
+         Constante * rationn = fact.creeConstante("rationnel", resn, resd);
          p.empiler(rationn);
     }
 }
@@ -1918,12 +1932,12 @@ void Operateur::opSIGN(Pile & p)
         p.empiler(reel);
     }
     // rationnelle
-    if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+    if (p.getTab(p.getN() - 1)->getType() == "rationnel")
     {
         Constante * ration = p.depiler();
         int num = (-1) * ration->getNumerateur();
         int den = ration->getDenominateur();
-        Constante * rationn = fact.creeConstante("rationnelle", num, den);
+        Constante * rationn = fact.creeConstante("rationnel", num, den);
         p.empiler(rationn);
     }
     // complexe
@@ -1945,11 +1959,11 @@ void Operateur::opSIGN(Pile & p)
             reel = fact.creeConstante("reel", 0, 0, val);
         }
 
-        if (comp->getPartieReelle()->getType() == "rationnelle")
+        if (comp->getPartieReelle()->getType() == "rationnel")
         {
             int num = (-1) * comp->getPartieReelle()->getNumerateur();
             int den = comp->getPartieReelle()->getDenominateur();
-            reel = fact.creeConstante("rationnelle", num, den);
+            reel = fact.creeConstante("rationnel", num, den);
         }
 
         // dans la partie virtuel
@@ -1965,11 +1979,11 @@ void Operateur::opSIGN(Pile & p)
             virtuel = fact.creeConstante("reel", 0, 0, val);
         }
 
-        if (comp->getPartieImaginaire()->getType() == "rationnelle")
+        if (comp->getPartieImaginaire()->getType() == "rationnel")
         {
             int num = (-1) * comp->getPartieImaginaire()->getNumerateur();
             int den = comp->getPartieImaginaire()->getDenominateur();
-            virtuel = fact.creeConstante("rationnelle", num, den);
+            virtuel = fact.creeConstante("rationnel", num, den);
         }
 
         Constante * complexe = fact.creeConstante("complexe", 0, 0, 0, reel, virtuel);
@@ -1994,12 +2008,12 @@ void Operateur::opINV(Pile & p)
         p.empiler(reel);
     }
     // rationnelle
-    if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+    if (p.getTab(p.getN() - 1)->getType() == "rationnel")
     {
         Constante * ration = p.depiler();
         int den = ration->getNumerateur();
         int num = ration->getDenominateur();
-        Constante * rationn = fact.creeConstante("rationnelle", num, den);
+        Constante * rationn = fact.creeConstante("rationnel", num, den);
         p.empiler(rationn);
     }
 }
@@ -2021,12 +2035,12 @@ void Operateur::opSQRT(Pile & p)
         p.empiler(reel);
     }
     // rationnelle
-    if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+    if (p.getTab(p.getN() - 1)->getType() == "rationnel")
     {
         Constante * ration = p.depiler();
         int num = sqrt(ration->getNumerateur());
         int den = sqrt(ration->getDenominateur());
-        Constante * rationn = fact.creeConstante("rationnelle", num, den);
+        Constante * rationn = fact.creeConstante("rationnel", num, den);
         p.empiler(rationn);
     }
 }
@@ -2048,12 +2062,12 @@ void Operateur::opSQR(Pile & p)
         p.empiler(reel);
     }
     // rationnelle
-    if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+    if (p.getTab(p.getN() - 1)->getType() == "rationnel")
     {
         Constante * ration = p.depiler();
         int num = ration->getNumerateur();
         int den = ration->getDenominateur();
-        Constante * rationn = fact.creeConstante("rationnelle", num * num, den * den);
+        Constante * rationn = fact.creeConstante("rationnel", num * num, den * den);
         p.empiler(rationn);
     }
     // complexe
@@ -2091,12 +2105,12 @@ void Operateur::opCUBE(Pile & p)
         p.empiler(reel);
     }
     // rationnelle
-    if (p.getTab(p.getN() - 1)->getType() == "rationnelle")
+    if (p.getTab(p.getN() - 1)->getType() == "rationnel")
     {
         Constante * ration = p.depiler();
         int num = ration->getNumerateur();
         int den = ration->getDenominateur();
-        Constante * rationn = fact.creeConstante("rationnelle", num * num * num, den * den * den);
+        Constante * rationn = fact.creeConstante("rationnel", num * num * num, den * den * den);
         p.empiler(rationn);
     }
     // complexe
