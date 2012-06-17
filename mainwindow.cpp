@@ -106,7 +106,9 @@ MainWindow::MainWindow(QWidget * parent) :
     QObject::connect(ui->buttonEVAL, SIGNAL(clicked()), this, SLOT(evalPressed()));
 
     QObject::connect(ui->buttonPoint, SIGNAL(clicked()), this, SLOT(pointPressed()));
-    QObject::connect(ui->buttonExpression, SIGNAL(clicked()), this, SLOT(ExpressionPressed()));
+
+    QObject::connect(ui->buttonExpression, SIGNAL(clicked()), this, SLOT(expressionPressed()));
+
     QObject::connect(ui->buttonDollar, SIGNAL(clicked()), this, SLOT(dollarPressed()));
     QObject::connect(ui->buttonPlus, SIGNAL(clicked()), this, SLOT(plusPressed()));
     QObject::connect(ui->buttonDim, SIGNAL(clicked()), this, SLOT(dimPressed()));
@@ -252,7 +254,7 @@ void MainWindow::entrerPressed()
                 // L'option complexe est à oui.
                 else
                 {
-                    // Récupération des parties Réelle et Imaginaires si elles sont de type réelles ou rationnelles.
+                    // Récupération des parties Réelle et Imaginaire si elles sont de type réelles ou rationnelles.
                     // comp[0] = partie réelle.
                     // comp[1] = partie imaginaire.
                     QStringList rationReel = comp[0].split(ra);
@@ -1550,18 +1552,22 @@ void MainWindow::entrerPressed()
 // Évaluer une expression.
 void MainWindow::evalPressed()
 {
-    test = 0;   // fin d'expression
+    test = 0;
 
-    QString exp;
-    // pour afficher l'expression
+    QString exp, value;
+
+
+    // Affichage de l'expression.
     for (int i = 0; i < expPile.getNombre(); i++)
         exp += expPile.getExpression(i) + " ";
     ui->Express->setText(exp);
 
-    // pour calcule expression
+    // Pour chaque élément de l'expression.
     for (int i = 0; i < expPile.getNombre(); i++)
     {
-        QString value = expPile.getExpression(i);
+        value = expPile.getExpression(i);
+
+        // Cas d'une constante.
         if (value != "SWAP" && value != "SUM" && value != "MEAN" && value != "DUP" &&
                 value != "DROP" && value != "+" && value != "-" && value != "*" &&
                 value != "/" && value != "!" && value != "sin" && value != "cos" &&
@@ -1570,8 +1576,7 @@ void MainWindow::evalPressed()
                 value != "SQR" && value != "CUBE" && value != "POW" && value != "MOD" &&
                 value != "SIGN")
         {
-
-            //saisir reel,rationnelle,complexe ou entier
+            // Expressions régulières pour ressortir les rationnels, les réels, les complexes et les entiers.
             QRegExp ra("[/]+");
             QStringList rationnelle = value.split(ra);
             QRegExp ree("[.]+");
@@ -1579,12 +1584,12 @@ void MainWindow::evalPressed()
             QRegExp co("[$]+");
             QStringList comp = value.split(co);
 
-
-            //determiner s'il est complexe d'abord
+            // Si la constante est de type complexe.
             if (comp.count() > 1)
             {
-                //saisir un complexe, comp[0]est reel, comp[1] est virtuel
-
+                // Récupération des parties Réelle et Imaginaire si elles sont de type réelles ou rationnelles.
+                // comp[0] = partie réelle.
+                // comp[1] = partie imaginaire.
                 QStringList rationReel = comp[0].split(ra);//rationReel[0]/rationReel[1]
                 QStringList rationVir = comp[1].split(ra); //rationVir[0]/rationVir[1]
 
@@ -1593,14 +1598,15 @@ void MainWindow::evalPressed()
 
                 Constante* comReel,* comVirtuel;
 
-                //complexe:pour le partie reel
+                // Cas de la partie réelle du complexe.
+                // La partie réelle du complexe est de type rationnel.
                 if (rationReel.count() > 1)
                 {
-                    //saisir un rationnelle
-                    int num = rationReel[0].toInt();//numerateur
-                    int den = rationReel[1].toInt();//denominateur
+                    // Instanciation du numérateur et du dénominateur.
+                    int num = rationReel[0].toInt(); // Numérateur.
+                    int den = rationReel[1].toInt(); // Dénominateur.
 
-                    //simplifier
+                    // Simplification.
                     int min = (num<=den ? num:den);
                     for (int i = min; i > 1; i--)
                     {
@@ -1610,34 +1616,35 @@ void MainWindow::evalPressed()
                             den /= i;
                         }
                     }
-                    //empiler
+                    // Création de la constante de la partie réelle de type rationnel du complexe.
                     comReel = fac.creeConstante("rationnel", num, den);
-
                 }
+                // La partie réelle du complexe n'est pas de type rationnel.
                 else
                 {
+                    // La partie réelle du complexe est de type réel.
                     if (reelReel.count() > 1)
                     {
-                        //saisir un reel
+                        // Création de la constante de la partie réelle de type réel du complexe.
                         comReel = fac.creeConstante("reel", 0, 0, comp[0].toFloat());
-
                     }
+                    // La partie réelle du complexe est de type entier.
                     else
                     {
-                        //saisir un entier
+                        // Création de la constante de la partie réelle de type entier du complexe.
                         Constante * entier = fac.creeConstante("entier", comp[0].toInt());
                         comReel = entier;
                     }
                 }
-
-                //complexe:pour le partie virtuel
+                // Cas de la partie imaginaire du complexe.
+                // La partie imaginaire du complexe est de type rationnel.
                 if (rationVir.count() > 1)
                 {
-                    //saisir un rationnelle
-                    int num = rationVir[0].toInt();//numerateur
-                    int den = rationVir[1].toInt();//denominateur
+                    // Instanciation du numérateur et du dénominateur.
+                    int num = rationVir[0].toInt(); // Numérateur.
+                    int den = rationVir[1].toInt(); // Dénominateur.
 
-                    //simplifier
+                    // Simplification.
                     int min = (num<=den ? num:den);
                     for (int i = min; i > 1; i--)
                     {
@@ -1647,38 +1654,42 @@ void MainWindow::evalPressed()
                             den /= i;
                         }
                     }
-                    //empiler
+                    // Création de la constante de la partie imaginaire de type rationnel du complexe.
                     comVirtuel = fac.creeConstante("rationnel", num, den);
-
                 }
+                // La partie imaginaire du complexe n'est pas de type rationnel.
                 else
                 {
+                    // La partie imaginaire du complexe est de type réel.
                     if (reelVir.count() > 1)
                     {
-                        //saisir un reel
+                        // Création de la constante de la partie imaginaire de type réel du complexe.
                         comVirtuel = fac.creeConstante("reel", 0, 0, comp[1].toFloat());
-
                     }
+                    // La partie imaginaire du complexe est de type entier.
                     else
                     {
-                        //saisir un entier
+                        // Création de la constante de la partie imaginaire de type entier du complexe.
                         Constante * entier = fac.creeConstante("entier", comp[1].toInt());
                         comVirtuel = entier;
                     }
                 }
+                // Création de la constante de type complexe contenant les parties réelles et imaginaires.
                 Constante * complexe = fac.creeConstante("complexe", 0, 0, 0, comReel, comVirtuel);
+                // On empile le complexe dans la pile.
                 pile.empiler(complexe);
-
-            }//saisir n'est pas complexe
+            }
+            // Cas d'un non complexe.
             else
             {
+                // Cas d'un rationnel.
                 if (rationnelle.count() > 1)
                 {
-                    //saisir un rationnelle
-                    int num = rationnelle[0].toInt();//numerateur
-                    int den = rationnelle[1].toInt();//denominateur
+                    // Instanciation du numérateur et du dénominateur du rationnel.
+                    int num = rationnelle[0].toInt();
+                    int den = rationnelle[1].toInt();
 
-                    //simplifier
+                    // Simplification.
                     int min = (num<=den ? num:den);
                     for (int i = min; i > 1; i--)
                     {
@@ -1688,55 +1699,86 @@ void MainWindow::evalPressed()
                             den /= i;
                         }
                     }
-                    //empiler
+                    // Création de la constante de type rationnel.
                     Constante * ration = fac.creeConstante("rationnel", num, den);
+                    // On empile le rationnel dans la pile.
                     pile.empiler(ration);
-
                 }
+                // Cas d'un non rationnel.
                 else
                 {
+                    // Cas d'un réel.
                     if (reel.count() > 1)
                     {
-                        //saisir un reel
+                        // Création de la constante de type réel.
                         Constante * reelle = fac.creeConstante("reel", 0, 0, value.toFloat());
+                        // On empile le réel dans la pile.
                         pile.empiler(reelle);
                     }
+                    // Cas d'un entier.
                     else
                     {
-                        //saisir un entier
+                        // Création de la constante de type entier.
                         Constante * entier = fac.creeConstante("entier", value.toInt());
+                        // On empile l'entier dans la pile.
                         pile.empiler(entier);
                     }
                 }
             }
         }
+        // Cas d'un opérateur.
         else
         {
-            if (value == "SWAP") this->opSWAP(pile);
-            if (value == "SUM")  this->opSUM(pile, mode, com);
-            if (value == "MEAN") this->opMEAN(pile, mode, com);
-            if (value == "DUP")  this->opDUP(pile);
-            if (value == "DROP") this->opDROP(pile);
-            if (value == "+")    this->opPlus(pile, mode, com);
-            if (value == "-")    this->opDim(pile, mode, com);
-            if (value == "*")    this->opMult(pile, mode, com);
-            if (value == "/")    this->opDiv(pile, mode, com);
-            if (value == "!")    this->opFact(pile);
-            if (value == "sin")  this->opSin(pile, type);
-            if (value == "cos")  this->opCos(pile, type);
-            if (value == "tan")  this->opTan(pile, type);
-            if (value == "sinh") this->opSinh(pile, type);
-            if (value == "cosh") this->opCosh(pile, type);
-            if (value == "tanh") this->opTanh(pile, type);
-            if (value == "log")  this->opLog(pile);
-            if (value == "ln")   this->opLn(pile);
-            if (value == "INV")  this->opINV(pile);
-            if (value == "SQRT") this->opSQRT(pile);
-            if (value == "SQR")  this->opSQR(pile);
-            if (value == "CUBE") this->opCUBE(pile);
-            if (value == "POW")  this->opPOW(pile, mode);
-            if (value == "MOD")  this->opMOD(pile);
-            if (value == "SIGN") this->opSIGN(pile);
+            if (value == "SWAP")
+                this->opSWAP(pile);
+            if (value == "SUM")
+                this->opSUM(pile, mode, com);
+            if (value == "MEAN")
+                this->opMEAN(pile, mode, com);
+            if (value == "DUP")
+                this->opDUP(pile);
+            if (value == "DROP")
+                this->opDROP(pile);
+            if (value == "+")
+                this->opPlus(pile, mode, com);
+            if (value == "-")
+                this->opDim(pile, mode, com);
+            if (value == "*")
+                this->opMult(pile, mode, com);
+            if (value == "/")
+                this->opDiv(pile, mode, com);
+            if (value == "!")
+                this->opFact(pile);
+            if (value == "sin")
+                this->opSin(pile, type);
+            if (value == "cos")
+                this->opCos(pile, type);
+            if (value == "tan")
+                this->opTan(pile, type);
+            if (value == "sinh")
+                this->opSinh(pile, type);
+            if (value == "cosh")
+                this->opCosh(pile, type);
+            if (value == "tanh")
+                this->opTanh(pile, type);
+            if (value == "log")
+                this->opLog(pile);
+            if (value == "ln")
+                this->opLn(pile);
+            if (value == "INV")
+                this->opINV(pile);
+            if (value == "SQRT")
+                this->opSQRT(pile);
+            if (value == "SQR")
+                this->opSQR(pile);
+            if (value == "CUBE")
+                this->opCUBE(pile);
+            if (value == "POW")
+                this->opPOW(pile, mode);
+            if (value == "MOD")
+                this->opMOD(pile);
+            if (value == "SIGN")
+                this->opSIGN(pile);
         }
     }
     pile.notifier();
@@ -2007,7 +2049,6 @@ void MainWindow::modPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "%");
 }
-
 void MainWindow::powPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "POW");
