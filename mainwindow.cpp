@@ -1532,8 +1532,8 @@ void MainWindow::clearPressed()
 {
     ui->inputLine->setText("");
 
-    for(int i=0;i<stack.getN();i++){
-        stack.depiler();  //vider la pile
+    for(int i=0;i<pile.getN();i++){
+        pile.depiler();  //vider la pile
     }
 }
 
