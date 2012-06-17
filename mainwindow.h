@@ -27,7 +27,7 @@ class MainWindow : public QMainWindow, public Operateur, public ObservateurMW
 private:
     QString type; // Radian ou degrès, initialisé à radian.
     QString mode; // Entier ou rationnel ou réel, initialisé à entier.
-    int com; // Utilisation des complexes ou non, initialisé à 0 pour les non-complexes.
+    bool com; // Utilisation des complexes ou non, initialisé à false pour les non-complexes.
     Expression expPile; // Sauvegarde de l'expression.
     int test; // marque si c'est une expression et si c'est deja évalué, initialisé a 0.
     QString memoire;    // Pour la fonction rétablir.

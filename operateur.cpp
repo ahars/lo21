@@ -12,27 +12,13 @@ FactoryConstante fact; //cree factory
 
 void Operateur::opSWAP(Pile & p)
 {
-    QMessageBox message;
-    int val1, val2;
-
-    if (!p.pileVide())
-        val1 = p.depiler()->getEntier();
-    else
-        message.setText("");
-
-    if (!p.pileVide())
-        val2 = p.depiler()->getEntier();
-    else
-
-
+    int val1 = p.depiler()->getEntier();
+    int val2 = p.depiler()->getEntier();
 
     Constante * temp = p.getTab(val1 - 1);
     p.setTab(val1 - 1, p.getTab(val2 - 1));
     p.setTab(val1 - 2, temp);
 }
-
-
-
 
 void Operateur::opSUM(Pile & p, QString mode, int com)
 {
