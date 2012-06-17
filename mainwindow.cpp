@@ -215,6 +215,51 @@ void MainWindow::miseAJour()
     for (unsigned int i = 0; i < pile.getN(); i++)
         ui->listWidget->addItem(pile.toString(pile.getTab(i)));
 */
+    //afficher dans listWidget
+    ui->listWidget->clear();
+
+    for (int j = pile.getN() - 1; j >= 0; j--)
+    {
+        if (pile.getTab(j)->getType() == "entier")
+            ui->listWidget->addItem(QString::number(pile.getTab(j)->getEntier(), 10));
+
+        if (pile.getTab(j)->getType() == "rationnel")
+        {
+            QString res = QString::number(pile.getTab(j)->getNumerateur(), 10) + "/" + QString::number(pile.getTab(j)->getDenominateur(), 10);
+            ui->listWidget->addItem(res);
+        }
+        if (pile.getTab(j)->getType() == "reel")
+            ui->listWidget->addItem(QString::number(pile.getTab(j)->getReel(), 'g', 10));
+
+        if (pile.getTab(j)->getType() == "complexe")
+        {
+            QString res;
+            //afficher partie reel
+            if (pile.getTab(j)->getPartieReelle()->getType() == "entier")
+                res = QString::number(pile.getTab(j)->getPartieReelle()->getEntier(), 10) + "$";
+
+            if (pile.getTab(j)->getPartieReelle()->getType() == "reel")
+                res = QString::number(pile.getTab(j)->getPartieReelle()->getReel(), 'g', 10) + "$";
+
+            if (pile.getTab(j)->getPartieReelle()->getType() == "rationnel")
+                res = QString::number(pile.getTab(j)->getPartieReelle()->getNumerateur(), 10) + "/" + QString::number(pile.getTab(j)->getPartieReelle()->getDenominateur(), 10) + "$";
+
+            //afficher partie virtuel
+            if (pile.getTab(j)->getPartieImaginaire()->getType() == "entier")
+                res += QString::number(pile.getTab(j)->getPartieImaginaire()->getEntier(), 10);
+
+            if (pile.getTab(j)->getPartieImaginaire()->getType() == "reel")
+                res += QString::number(pile.getTab(j)->getPartieImaginaire()->getReel(), 'g', 10);
+
+            if (pile.getTab(j)->getPartieImaginaire()->getType() == "rationnel")
+                res += QString::number(pile.getTab(j)->getPartieImaginaire()->getNumerateur(), 10) + "/" + QString::number(pile.getTab(j)->getPartieImaginaire()->getDenominateur(), 10);
+
+
+            ui->listWidget->addItem(res);
+        }
+    }
+
+
 }
 
 // Appui sur le bouton ENTRER.
@@ -240,7 +285,7 @@ void MainWindow::entrerPressed()
 
         //fin d'expression
         if (expression.count() > 1 && expression[1] == "")
-             list[i]=expression[0];
+             list[i] = expression[0];
 
         if (test == 1)
              expPile.insert(list[i]);
@@ -1245,48 +1290,7 @@ void MainWindow::entrerPressed()
 
     }
 
-    //afficher dans listWidget
-    ui->listWidget->clear();
-
-    for(int j=0;j<pile.getN();j++){
-        if(pile.getTab(j)->getType()=="entier"){
-            ui->listWidget->addItem(QString::number(pile.getTab(j)->getEntier(),10));
-        }
-        if(pile.getTab(j)->getType()=="rationnel"){
-            QString res=QString::number(pile.getTab(j)->getNumerateur(),10)+"/"+QString::number(pile.getTab(j)->getDenominateur(),10);
-            ui->listWidget->addItem(res);
-        }
-        if(pile.getTab(j)->getType()=="reel"){
-            ui->listWidget->addItem(QString::number(pile.getTab(j)->getReel(),'g',10));
-        }
-        if(pile.getTab(j)->getType()=="complexe"){
-            QString res;
-            //afficher partie reel
-            if(pile.getTab(j)->getPartieReelle()->getType()=="entier"){
-                res=QString::number(pile.getTab(j)->getPartieReelle()->getEntier(),10)+"$";
-            }
-            if(pile.getTab(j)->getPartieReelle()->getType()=="reel"){
-                res=QString::number(pile.getTab(j)->getPartieReelle()->getReel(),'g',10)+"$";
-            }
-            if(pile.getTab(j)->getPartieReelle()->getType()=="rationnel"){
-                res=QString::number(pile.getTab(j)->getPartieReelle()->getNumerateur(),10)+"/"+QString::number(pile.getTab(j)->getPartieReelle()->getDenominateur(),10)+"$";
-            }
-
-            //afficher partie virtuel
-            if(pile.getTab(j)->getPartieImaginaire()->getType()=="entier"){
-                res+=QString::number(pile.getTab(j)->getPartieImaginaire()->getEntier(),10);
-            }
-            if(pile.getTab(j)->getPartieImaginaire()->getType()=="reel"){
-                res+=QString::number(pile.getTab(j)->getPartieImaginaire()->getReel(),'g',10);
-            }
-            if(pile.getTab(j)->getPartieImaginaire()->getType()=="rationnel"){
-                res+=QString::number(pile.getTab(j)->getPartieImaginaire()->getNumerateur(),10)+"/"+QString::number(pile.getTab(j)->getPartieImaginaire()->getDenominateur(),10);
-            }
-
-            ui->listWidget->addItem(res);
-        }
-    }
-
+    pile.notifier();
     ui->inputLine->setText("");
 }
 
@@ -1482,50 +1486,7 @@ void MainWindow::evalPressed()
             if (value == "SIGN") this->opSIGN(pile);
         }
     }
-
-    //afficher dans listWidget
-    ui->listWidget->clear();
-
-    for (int j = 0; j < pile.getN(); j++)
-    {
-        if (pile.getTab(j)->getType() == "entier")
-            ui->listWidget->addItem(QString::number(pile.getTab(j)->getEntier(), 10));
-
-        if (pile.getTab(j)->getType() == "rationnel")
-        {
-            QString res = QString::number(pile.getTab(j)->getNumerateur(), 10) + "/" + QString::number(pile.getTab(j)->getDenominateur(), 10);
-            ui->listWidget->addItem(res);
-        }
-        if (pile.getTab(j)->getType() == "reel")
-            ui->listWidget->addItem(QString::number(pile.getTab(j)->getReel(), 'g', 10));
-
-        if (pile.getTab(j)->getType() == "complexe")
-        {
-            QString res;
-            //afficher partie reel
-            if (pile.getTab(j)->getPartieReelle()->getType() == "entier")
-                res = QString::number(pile.getTab(j)->getPartieReelle()->getEntier(), 10) + "$";
-
-            if (pile.getTab(j)->getPartieReelle()->getType() == "reel")
-                res = QString::number(pile.getTab(j)->getPartieReelle()->getReel(), 'g', 10) + "$";
-
-            if (pile.getTab(j)->getPartieReelle()->getType() == "rationnel")
-                res = QString::number(pile.getTab(j)->getPartieReelle()->getNumerateur(), 10) + "/" + QString::number(pile.getTab(j)->getPartieReelle()->getDenominateur(), 10) + "$";
-
-            //afficher partie virtuel
-            if (pile.getTab(j)->getPartieImaginaire()->getType() == "entier")
-                res += QString::number(pile.getTab(j)->getPartieImaginaire()->getEntier(), 10);
-
-            if (pile.getTab(j)->getPartieImaginaire()->getType() == "reel")
-                res += QString::number(pile.getTab(j)->getPartieImaginaire()->getReel(), 'g', 10);
-
-            if (pile.getTab(j)->getPartieImaginaire()->getType() == "rationnel")
-                res += QString::number(pile.getTab(j)->getPartieImaginaire()->getNumerateur(), 10) + "/" + QString::number(pile.getTab(j)->getPartieImaginaire()->getDenominateur(), 10);
-
-
-            ui->listWidget->addItem(res);
-        }
-    }
+    pile.notifier();
 }
 
 // Appui sur le bouton retablir.
