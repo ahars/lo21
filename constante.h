@@ -36,10 +36,9 @@ public:
     virtual QString getType() const = 0;
 
     /*!
-      * \brief
-      *
-      * \param
-      * \return
+      * \brief Getter de la valeur de l'objet Entier.
+      * Méthode permettant d'obtenir la valeur de l'objet Entier.
+      * \return Valeur de l'objet Entier.
       */
     virtual int getEntier() const = 0;
 

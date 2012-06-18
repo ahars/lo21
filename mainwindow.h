@@ -21,6 +21,7 @@
 #include "pile.h"
 #include "expression.h"
 #include "observateurMW.h"
+#include "logSystem.h"
 
 namespace Ui {
 class MainWindow;

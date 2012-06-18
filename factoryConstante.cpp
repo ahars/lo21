@@ -27,10 +27,9 @@
   * \param item3 Le contenu du réel à créer.
   * \param item4 La partie réelle du complexe à créer.
   * \param item5 La partie imaginaire du complexe à créer.
-  * \param item6 Le contenu de l'expression à créer.
   * \return un objet d'une classe fille de Constante.
   */
-Constante * FactoryConstante::creeConstante(QString type, int item1, int item2, float item3, Constante * item4, Constante * item5, QString item6)
+Constante * FactoryConstante::creeConstante(QString type, int item1, int item2, float item3, Constante * item4, Constante * item5)
 {
     if (type == "entier")
         return new Entier(item1);
@@ -40,6 +39,4 @@ Constante * FactoryConstante::creeConstante(QString type, int item1, int item2, 
         return new Rationnel(item1, item2);
     if (type == "complexe")
         return new Complexe(item4, item5);
-//    if (type == "expression")
-  //      return new Expression(item6);
 }

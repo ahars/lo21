@@ -165,6 +165,9 @@ MainWindow::MainWindow(QWidget * parent) :
     QObject::connect(ui->actionOui, SIGNAL(triggered()), this, SLOT(complexePressed()));
     QObject::connect(ui->actionNon, SIGNAL(triggered()), this, SLOT(nonComplexePressed()));
 
+    LogSystem::add("Lancement de la calculatrice", 3);
+    // Chargement du contexte de la Pile.
+
 }
 
 /*!
@@ -232,10 +235,11 @@ void MainWindow::entrerPressed()
     // Pour chaque élément de la liste de type QString que nous récupérons.
     while (i < list.count())
     {
-        // Détection d'une expression.
+        // Expression régulière pour la détection d'une expression.
         QRegExp ex("[']+");
         QStringList expression = list[i].split(ex);
 
+        // Cas d'une expression.
         if (expression.count() > 1 && expression[0] == "")
         {
             // Début de l'expression

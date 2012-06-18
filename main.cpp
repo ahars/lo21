@@ -21,6 +21,8 @@
 #include "type.h"
 #include "observablePile.h"
 #include "observateurMW.h"
+#include "logMessage.h"
+#include "logSystem.h"
 
 //! Fonction main.\n
 //! Instancie l'interface graphique de la calculatrice.

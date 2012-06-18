@@ -65,12 +65,9 @@ Pile::~Pile()
   * Fonction qui teste le nombre de places libres dans la pile.
   * \return Boolean true si la pile est pleine, sinon false.
   */
-bool Pile::pilePleine()
+int Pile::pilePleine()
 {
-    if (n < max)
-        return false;
-    else
-        return true;
+   return n == 0;
 }
 
 /*!
@@ -78,12 +75,9 @@ bool Pile::pilePleine()
   * Fonction qui teste la présence d'un élément dans la pile.
   * \return Boolean true si la pile est vide sinon false.
   */
-bool Pile::pileVide()
+int Pile::pileVide()
 {
-    if (n == 0)
-        return true;
-    else
-        return false;
+    return n == max;
 }
 
 /*!

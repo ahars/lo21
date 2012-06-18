@@ -14,7 +14,9 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     pile.cpp \
     operateur.cpp \
-    factoryConstante.cpp
+    factoryConstante.cpp \
+    logSystem.cpp \
+    logMessage.cpp
 
 HEADERS  += mainwindow.h \
     pile.h \
@@ -29,6 +31,8 @@ HEADERS  += mainwindow.h \
     reel.h \
     type.h \
     observablePile.h \
-    observateurMW.h
+    observateurMW.h \
+    logSystem.h \
+    logMessage.h
 
 FORMS    += mainwindow.ui

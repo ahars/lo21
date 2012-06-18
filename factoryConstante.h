@@ -41,10 +41,9 @@ public:
       * \param item3 Le contenu du réel à créer.
       * \param item4 La partie réelle du complexe à créer.
       * \param item5 La partie imaginaire du complexe à créer.
-      * \param item6 Le contenu de l'expression à créer.
       * \return un objet d'une classe fille de Constante.
       */
-    Constante * creeConstante(QString type, int item1 = 0, int item2 = 0, float item3 = 0, Constante * item4 = 0, Constante * item5 = 0, QString item6 = "");
+    Constante * creeConstante(QString type, int item1 = 0, int item2 = 0, float item3 = 0, Constante * item4 = 0, Constante * item5 = 0);
 };
 
 #endif // FACTORYCONSTANTE_H
