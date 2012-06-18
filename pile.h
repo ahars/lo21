@@ -15,6 +15,7 @@
 
 #include <QString>
 #include <set>
+#include <iostream>
 
 #include "factoryConstante.h"
 #include "observablePile.h"
@@ -155,6 +156,12 @@ public:
       * Fonction qui envoie une notification aux objets en attente.
       */
     void notifier();
+
+    /*!
+    *  \brief Fonction permettant d'avoir une chaine de caratère décrivant la pile
+    *  \return Une chaine de caratère décrivant la pile
+    */
+    std::string toString();
 };
 
 #endif // PILE_H

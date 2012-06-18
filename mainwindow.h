@@ -101,6 +101,18 @@ public:
     // Observer.
     void miseAJour();
 
+    /*!
+     *  \brief Fonction qui permet de sauvegarder le contexte de la calculatrice.
+     *   Fonction qui permet de sauvegarder le contexte de la calculatrice.
+     */
+    void save();
+
+    /*!
+     *  \brief Fonction qui permet de charger le contexte de la calculatrice.
+     *   Fonction qui permet de charger le contexte de la calculatrice.
+     */
+    void load();
+
 private slots:
     void num0Pressed();
     void num1Pressed();

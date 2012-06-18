@@ -121,4 +121,53 @@ void Pile::notifier()
         (* it)->miseAJour();
 }
 
+/*!
+*  \brief Fonction permettant d'avoir une chaine de caratère décrivant la pile
+*  \return Une chaine de caratère décrivant la pile
+*/
+std::string toString()
+{
+/*    QString s = "", res = "";
+    if (!pileVide())
+    {
+        for (int j = n - 1; j >= 0; j--)
+        {
+            if (tab[j]->getType() == "entier")
+                res = QString::number(tab[j]->getEntier(), 10);
+
+            if (tab[j]->getType() == "rationnel")
+                res = QString::number(tab[j]->getNumerateur(), 10) + "/" + QString::number(pile.getTab(j)->getDenominateur(), 10);
+
+            if (tab[j]->getType() == "reel")
+                res = QString::number(tab[j]->getReel(), 'g', 10);
+
+            if (tab[j]->getType() == "complexe")
+            {
+                //afficher partie reel
+                if (tab[j]->getPartieReelle()->getType() == "entier")
+                    res = QString::number(tab[j]->getPartieReelle()->getEntier(), 10) + "$";
+
+                if (tab[j]->getPartieReelle()->getType() == "reel")
+                    res = QString::number(tab[j]->getPartieReelle()->getReel(), 'g', 10) + "$";
+
+                if (tab[j]->getPartieReelle()->getType() == "rationnel")
+                    res = QString::number(tab[j]->getPartieReelle()->getNumerateur(), 10) + "/" + QString::number(this.getTab(j)->getPartieReelle()->getDenominateur(), 10) + "$";
+
+                //afficher partie virtuel
+                if (tab[j]->getPartieImaginaire()->getType() == "entier")
+                    res = QString::number(tab[j]->getPartieImaginaire()->getEntier(), 10);
+
+                if (tab[j]->getPartieImaginaire()->getType() == "reel")
+                    res = QString::number(tab[j]->getPartieImaginaire()->getReel(), 'g', 10);
+
+                if (tab[j]->getPartieImaginaire()->getType() == "rationnel")
+                    res = QString::number(tab[j]->getPartieImaginaire()->getNumerateur(), 10) + "/" + QString::number(pile.getTab(j)->getPartieImaginaire()->getDenominateur(), 10);
+            }
+            s += res;
+            s += " ";
+        }
+    }
+*/}
+
+
 

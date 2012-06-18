@@ -167,7 +167,7 @@ MainWindow::MainWindow(QWidget * parent) :
 
     LogSystem::add("Lancement de la calculatrice", 3);
     // Chargement du contexte de la Pile.
-
+    //load();
 }
 
 /*!
@@ -1590,11 +1590,14 @@ void MainWindow::evalPressed()
 
     QString exp, value;
 
-
     // Affichage de l'expression.
     for (int i = 0; i < expPile.getNombre(); i++)
         exp += expPile.getExpression(i) + " ";
     ui->Express->setText(exp);
+
+    // Log.
+    QString log = "Evaluation de l'expression : " + exp;
+    LogSystem::add(log, 0);
 
     // Pour chaque élément de l'expression.
     for (int i = 0; i < expPile.getNombre(); i++)
@@ -1825,6 +1828,7 @@ void MainWindow::evalPressed()
 void MainWindow::retablirPressed()
 {
     ui->inputLine->setText(memoire);
+    LogSystem::add("Retablir", 0);
 }
 
 /*!
@@ -1835,6 +1839,7 @@ void MainWindow::annulerPressed()
 {
     memoire=ui->inputLine->text();
     ui->inputLine->setText("");
+    LogSystem::add("Annuler.", 0);
 }
 
 /*!
@@ -2239,6 +2244,7 @@ void MainWindow::nonComplexePressed()
 {
     ui->comOuiNon->setText("non");
     com = false;
+    LogSystem::add("Mode non complexe choisi.", 0);
 }
 
 /*!
@@ -2249,6 +2255,7 @@ void MainWindow::complexePressed()
 {
     ui->comOuiNon->setText("oui");
     com = true;
+    LogSystem::add("Mode complexe choisi.", 0);
 }
 
 /*!
@@ -2259,6 +2266,7 @@ void MainWindow::reelPressed()
 {
     ui->mode->setText("reel");
     mode = "reel";
+    LogSystem::add("Mode reel choisi.", 0);
 }
 
 /*!
@@ -2269,6 +2277,7 @@ void MainWindow::rationnelPressed()
 {
     ui->mode->setText("rationnel");
     mode = "rationnel";
+    LogSystem::add("Mode rationnel choisi.", 0);
 }
 
 /*!
@@ -2279,4 +2288,43 @@ void MainWindow::entierPressed()
 {
     ui->mode->setText("entier");
     mode = "entier";
+    LogSystem::add("Mode entier choisi.", 0);
 }
+
+/*!
+ *  \brief Fonction qui permet de sauvgarder le contexte de la calculatrice.
+ *   Fonction qui permet de sauvgarder le contexte de la calculatrice.
+ */
+void MainWindow::save()
+{
+    LogSystem::add("sauvegarde du contexte", 1);
+/*    QFile fichier("contexte.dat");
+    fichier.open(QIODevice::WriteOnly | QIODevice::Text);
+
+    QTextStream flux(& fichier);
+    std::string s2 = pile.toString();
+    QString s = s2.c_str();
+    flux << s << "\n";
+    flux << ui->listWidget->text() << "\n";
+    fichier.close();
+*/}
+
+/*!
+ *  \brief Fonction qui permet de charger le contexte de la calculatrice.
+ *   Fonction qui permet de charger le contexte de la calculatrice.
+ */
+void MainWindow::load()
+{
+    LogSystem::add("chargement du contexte", 1);
+/*    QFile fichier("contexte.dat");
+    fichier.open(QIODevice::ReadOnly | QIODevice::Text);
+
+    QTextStream flux(& fichier);
+
+    QString s = flux.readLine();
+    ui->listWidget->setText(s);
+    evalPressed();
+    ui->listWidget->setText(flux.readLine());
+
+    fichier.close();
+*/}
