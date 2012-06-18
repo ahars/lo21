@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
+    <width>670</width>
     <height>544</height>
    </rect>
   </property>
@@ -19,8 +19,8 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>621</width>
-      <height>471</height>
+      <width>646</width>
+      <height>503</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -48,7 +48,7 @@
      <item row="3" column="3">
       <widget class="QLabel" name="label_6">
        <property name="text">
-        <string>                 </string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -418,15 +418,15 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="4" rowspan="4" colspan="2">
+     <item row="2" column="6" rowspan="4" colspan="2">
+      <widget class="QListWidget" name="listWidget"/>
+     </item>
+     <item row="2" column="4" colspan="2">
       <widget class="QTextEdit" name="Express">
        <property name="readOnly">
         <bool>true</bool>
        </property>
       </widget>
-     </item>
-     <item row="2" column="6" rowspan="4" colspan="2">
-      <widget class="QListWidget" name="listWidget"/>
      </item>
     </layout>
    </widget>
@@ -436,7 +436,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>640</width>
+     <width>670</width>
      <height>22</height>
     </rect>
    </property>

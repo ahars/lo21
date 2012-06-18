@@ -1,11 +1,9 @@
-/**
-\file main.cpp
-\author Jia Han & Antoine Hars
-\brief Instanciation de la calculatrice
-
-Ce fichier contient la déclaration de la fonction main pour l'instanciation de l'interface graphique.
-
-**/
+/*!
+ * \file main.cpp
+ * \author Jia Han & Antoine Hars
+ * \brief Instanciation de la calculatrice
+ * Ce fichier contient la déclaration de la fonction main pour l'instanciation de l'interface graphique.
+ */
 
 #include <QtGui/QApplication>
 

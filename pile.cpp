@@ -1,3 +1,10 @@
+/*!
+ * \file pile.cpp
+ * \author Jia Han & Antoine Hars
+ * \brief Déclaration des méthodes de la classe Pile.
+ * Ce fichier contient la déclaration des méthodes de la classe Pile.
+ */
+
 /* UV: LO21 - projet
  * Sujet: Calculatrice à notation polonaise inversée
  * Auteurs: Han Jia & Antoine Hars
@@ -8,6 +15,11 @@
 
 Pile * Pile::instanceUnique = 0;
 
+/*!
+  * \brief Fonction d'instanciation d'une pile au moyen du Design Pattern Singleton.
+  * Fonction de création de l'objet de la classe Pile.
+  * \return Objet Pile instancié.
+  */
 Pile & Pile::donneInstance()
 {
     if (instanceUnique == 0)
@@ -15,6 +27,10 @@ Pile & Pile::donneInstance()
     return * instanceUnique;
 }
 
+/*!
+  * \brief Fonction qui détruit l'objet pile.
+  * Fonction de destruction d'un objet de la classe Pile.
+  */
 void Pile::libereInstance()
 {
     if (instanceUnique != 0)
@@ -22,7 +38,10 @@ void Pile::libereInstance()
     instanceUnique = 0;
 }
 
-// Constructeur.
+/*!
+  * \brief Constructeur par défaut de la pile.
+  * Constructeur par défaut de la classe Pile.
+  */
 Pile::Pile():
     max(100),
     n(0)
@@ -30,7 +49,10 @@ Pile::Pile():
     tab = new Constante * [max];
 }
 
-// Destructeur.
+/*!
+  * \brief Destructeur de Pile.
+  * Destructeur de la classe Pile.
+  */
 Pile::~Pile()
 {
     for (int i = 0; i < max; i++)
@@ -38,7 +60,11 @@ Pile::~Pile()
     delete[] tab;
 }
 
-// Retourne TRUE si la pile est pleine.
+/*!
+  * \brief Fonction qui teste le cas d'une pile pleine.
+  * Fonction qui teste le nombre de places libres dans la pile.
+  * \return Boolean true si la pile est pleine, sinon false.
+  */
 bool Pile::pilePleine()
 {
     if (n < max)
@@ -47,7 +73,11 @@ bool Pile::pilePleine()
         return true;
 }
 
-// Retourne TRUE si la pile est vide.
+/*!
+  * \brief Fonction qui teste le cas d'une pile vide.
+  * Fonction qui teste la présence d'un élément dans la pile.
+  * \return Boolean true si la pile est vide sinon false.
+  */
 bool Pile::pileVide()
 {
     if (n == 0)
@@ -56,7 +86,11 @@ bool Pile::pileVide()
         return false;
 }
 
-// Empile un élément dans la pile.
+/*!
+  * \brief Fonction d'empilement d'une constante dans la Pile.
+  * Fonction qui empile une constante de la classe Pile.
+  * \param noeud Constante à empiler.
+  */
 void Pile::empiler(Constante * noeud)
 {
     if (!pilePleine())
@@ -66,7 +100,11 @@ void Pile::empiler(Constante * noeud)
     }
 }
 
-// Dépile le dernier élément de la pile.
+/*!
+  * \brief Fonction qui dépile un élément de la pile.
+  * Fonction de dépilement d'un élément de la classe Pile.
+  * \return Constante dépilée.
+  */
 Constante * Pile::depiler()
 {
     Constante * result;
@@ -78,7 +116,10 @@ Constante * Pile::depiler()
     return result;
 }
 
-// Notifier à l'observateur.
+/*!
+  * \brief Fonction de notification d'un changement dans la pile du Design Pattern Observer.
+  * Fonction qui envoie une notification aux objets en attente.
+  */
 void Pile::notifier()
 {
     std::set<ObservateurMW *>::iterator it;

@@ -1,3 +1,10 @@
+/*!
+ * \file operateur.cpp
+ * \author Jia Han & Antoine Hars
+ * \brief Déclaration des méthodes de la classe Operateur.
+ * Ce fichier contient la déclaration des méthodes de la classe Operateur.
+ */
+
 /* UV: LO21 - projet
  * Sujet: Calculatrice à notation polonaise inversée
  * Auteurs: Han Jia & Antoine Hars
@@ -6,10 +13,14 @@
 
 #include "operateur.h"
 
-FactoryConstante fact; //cree factory
+// Création du factory.
+FactoryConstante fact;
 
-//fonctions class Operateur
-
+/*!
+  * \brief Opérateur SWAP de Operateur.
+  * Permutation de 2 éléments de la pile.
+  * \param p La référence de la pile.
+  */
 void Operateur::opSWAP(Pile & p)
 {
     int val1 = p.depiler()->getEntier();
@@ -20,6 +31,13 @@ void Operateur::opSWAP(Pile & p)
     p.setTab(val1 - 2, temp);
 }
 
+/*!
+  * \brief Opérateur SUM de Operateur.
+  * Somme d'un nombre d'élements de la pile.
+  * \param p La référence de la pile.
+  * \param mode Le type de constantes utilisé.
+  * \param com Le paramètre complexe à vrai ou faux.
+  */
 void Operateur::opSUM(Pile & p, QString mode, int com)
 {
     int val1 = p.depiler()->getEntier();
@@ -64,7 +82,7 @@ void Operateur::opSUM(Pile & p, QString mode, int com)
             p.setTab(0, reel); //empiler le result a la premiere
         }
 
-        if (mode == "ration")
+        if (mode == "rationnel")
         {
             Constante * ration = p.getTab(0);
             int num = ration->getNumerateur();
@@ -155,7 +173,7 @@ void Operateur::opSUM(Pile & p, QString mode, int com)
 
         }
 
-        if (mode == "ration")
+        if (mode == "rationnel")
         {
             // tirer la partie reel et virtuel de complexe
             Constante * comp = p.getTab(0);
@@ -218,8 +236,13 @@ void Operateur::opSUM(Pile & p, QString mode, int com)
         p.depiler();
 }
 
-
-
+/*!
+  * \brief Opérateur MEAN de Operateur.
+  * Moyenne d'un nombre d'éléments de la pile.
+  * \param p La référence de la pile.
+  * \param mode Le type de constantes utilisé.
+  * \param com Le paramètre complexe à vrai ou faux.
+  */
 void Operateur::opMEAN(Pile & p, QString mode, int com)
 {
     int val1 = p.depiler()->getEntier();
@@ -264,7 +287,7 @@ void Operateur::opMEAN(Pile & p, QString mode, int com)
             p.setTab(0, reel); // empiler le result a la premiere
        }
 
-        if (mode == "ration")
+        if (mode == "rationnel")
         {
             Constante * ration = p.getTab(0);
             int num = ration->getNumerateur();
@@ -352,7 +375,7 @@ void Operateur::opMEAN(Pile & p, QString mode, int com)
             p.setTab(0, complexe); // empiler le result a la premiere
         }
 
-        if (mode == "ration")
+        if (mode == "rationnel")
         {
             // tirer la partie reel et virtuel de complexe
             Constante * comp = p.getTab(0);
@@ -417,8 +440,11 @@ void Operateur::opMEAN(Pile & p, QString mode, int com)
         p.depiler();
 }
 
-
-
+/*!
+  * \brief Opérateur DUP de Operateur.
+  * Duplication du premier élément de la pile.
+  * \param p La référence de la pile.
+  */
 void Operateur::opDUP(Pile & p)
 {
     p.setN(p.getN() + 1);
@@ -427,6 +453,11 @@ void Operateur::opDUP(Pile & p)
         p.setTab(i, p.getTab(i - 1));
 }
 
+/*!
+  * \brief Opérateur DROP de Operateur.
+  * Suppression du premier élément de la pile.
+  * \param p La référence de la pile.
+  */
 void Operateur::opDROP(Pile & p)
 {
     for (int i = 0; i < p.getN() - 1; i++)
@@ -434,6 +465,13 @@ void Operateur::opDROP(Pile & p)
     p.setN(p.getN() - 1);
 }
 
+/*!
+  * \brief Opérateur + de Operateur.
+  * Calcul de l'addition de deux éléments de la pile.
+  * \param p La référence de la pile.
+  * \param mode Le type de constantes utilisé.
+  * \param com Le paramètre complexe à vrai ou faux.
+  */
 void Operateur::opPlus(Pile & p, QString mode, int com)
 {
 
@@ -503,7 +541,7 @@ void Operateur::opPlus(Pile & p, QString mode, int com)
             p.empiler(reel);
         }
         // rationnelle
-        if (mode == "ration")
+        if (mode == "rationnel")
         {
             Constante * ration = p.depiler();
             int num1 = ration->getNumerateur();
@@ -630,7 +668,7 @@ void Operateur::opPlus(Pile & p, QString mode, int com)
             Constante * complexe = fact.creeConstante("complexe", 0, 0, 0, reel, virtuel);
             p.empiler(complexe);
         }
-        if (mode == "ration")
+        if (mode == "rationnel")
         {
             // partie reel
             int reelnum1 = partieReel->getNumerateur();
@@ -687,8 +725,13 @@ void Operateur::opPlus(Pile & p, QString mode, int com)
     }
 }
 
-
-
+/*!
+  * \brief Opérateur - de Operateur.
+  * Calcul de la soustraction de deux éléments de la pile.
+  * \param p La référence de la pile.
+  * \param mode Le type de constantes utilisé.
+  * \param com Le paramètre complexe à vrai ou faux.
+  */
 void Operateur::opDim(Pile & p, QString mode, int com)
 {
     if (com == 0)
@@ -760,7 +803,7 @@ void Operateur::opDim(Pile & p, QString mode, int com)
             p.empiler(reel);
         }
 
-        if (mode == "ration")
+        if (mode == "rationnel")
         {
             Constante * ration = p.depiler();
             int num1 = ration->getNumerateur();
@@ -885,7 +928,7 @@ void Operateur::opDim(Pile & p, QString mode, int com)
             Constante * complexe = fact.creeConstante("complexe", 0, 0, 0, reel, virtuel);
             p.empiler(complexe);
         }
-        if (mode == "ration")
+        if (mode == "rationnel")
         {
             // partie reel
             int reelnum1 = partieReel->getNumerateur();
@@ -942,6 +985,13 @@ void Operateur::opDim(Pile & p, QString mode, int com)
     }
 }
 
+/*!
+  * \brief Opérateur * de Operateur.
+  * Calcul de la multiplication de deux éléments de la pile.
+  * \param p La référence de la pile.
+  * \param mode Le type de constantes utilisé.
+  * \param com Le paramètre complexe à vrai ou faux.
+  */
 void Operateur::opMult(Pile & p, QString mode, int com)
 {
     if (com == 0)
@@ -1015,7 +1065,7 @@ void Operateur::opMult(Pile & p, QString mode, int com)
         }
 
         // rationnelle
-        if (mode == "ration")
+        if (mode == "rationnel")
         {
             Constante * ration = p.depiler();
             int num1 = ration->getNumerateur();
@@ -1141,7 +1191,7 @@ void Operateur::opMult(Pile & p, QString mode, int com)
             p.empiler(complexe);
         }
 
-        if (mode == "ration")
+        if (mode == "rationnel")
         {
             // partie reel
             int reelnum1 = partieReel->getNumerateur();
@@ -1198,6 +1248,13 @@ void Operateur::opMult(Pile & p, QString mode, int com)
     }
 }
 
+/*!
+  * \brief Opérateur / de Operateur.
+  * Calcul de la division de deux éléments de la pile.
+  * \param p La référence de la pile.
+  * \param mode Le type de constantes utilisé.
+  * \param com Le paramètre complexe à vrai ou faux.
+  */
 void Operateur::opDiv(Pile & p, QString mode, int com)
 {
     if (com == 0)
@@ -1268,7 +1325,7 @@ void Operateur::opDiv(Pile & p, QString mode, int com)
             p.empiler(reel);
         }
         // rationnelle
-        if (mode == "ration")
+        if (mode == "rationnel")
         {
             Constante * ration = p.depiler();
             int num1 = ration->getNumerateur();
@@ -1394,7 +1451,7 @@ void Operateur::opDiv(Pile & p, QString mode, int com)
             Constante * complexe = fact.creeConstante("complexe", 0, 0, 0, reel, virtuel);
             p.empiler(complexe);
         }
-        if (mode == "ration")
+        if (mode == "rationnel")
         {
             // partie reel
             int reelnum1 = partieReel->getNumerateur();
@@ -1452,6 +1509,11 @@ void Operateur::opDiv(Pile & p, QString mode, int com)
     }
 }
 
+/*!
+  * \brief Opérateur ! de Operateur.
+  * Calcul de la factoriel d'un élément de la pile.
+  * \param p La référence de la pile.
+  */
 void Operateur::opFact(Pile & p)
 {
     // verifier si le type est entier
@@ -1473,6 +1535,12 @@ void Operateur::opFact(Pile & p)
     }
 }
 
+/*!
+  * \brief Opérateur sin de Operateur.
+  * Calcul du sinus d'un élément de la pile.
+  * \param p La référence de la pile.
+  * \param type Le type de constantes utilisé.
+  */
 void Operateur::opSin(Pile & p, QString type)
 {
     if (p.getTab(p.getN() - 1)->getType() == "entier")
@@ -1513,6 +1581,12 @@ void Operateur::opSin(Pile & p, QString type)
         }
 }
 
+/*!
+  * \brief Opérateur cos de Operateur.
+  * Calcul du cosinus d'un élément de la pile.
+  * \param p La référence de la pile.
+  * \param type Le type de constantes utilisé.
+  */
 void Operateur::opCos(Pile & p, QString type)
 {
     if (p.getTab(p.getN() - 1)->getType() == "entier")
@@ -1553,6 +1627,12 @@ void Operateur::opCos(Pile & p, QString type)
         }
 }
 
+/*!
+  * \brief Opérateur tan de Operateur.
+  * Calcul de la tangente d'un élément de la pile.
+  * \param p La référence de la pile.
+  * \param type Le type de constantes utilisé.
+  */
 void Operateur::opTan(Pile & p, QString type)
 {
     if (p.getTab(p.getN() - 1)->getType() == "entier")
@@ -1593,6 +1673,12 @@ void Operateur::opTan(Pile & p, QString type)
         }
 }
 
+/*!
+  * \brief Opérateur sinh de Operateur.
+  * Calcul du sinus hyperbolique d'un élément de la pile.
+  * \param p La référence de la pile.
+  * \param type Le type de constantes utilisé.
+  */
 void Operateur::opSinh(Pile & p, QString type)
 {
     if (p.getTab(p.getN() - 1)->getType() == "entier")
@@ -1633,6 +1719,12 @@ void Operateur::opSinh(Pile & p, QString type)
         }
 }
 
+/*!
+  * \brief Opérateur cosh de Operateur.
+  * Calcul du cosinus hyperbolique d'un élément de la pile.
+  * \param p La référence de la pile.
+  * \param type Le type de constantes utilisé.
+  */
 void Operateur::opCosh(Pile & p, QString type)
 {
     if (p.getTab(p.getN() - 1)->getType() == "entier")
@@ -1673,6 +1765,12 @@ void Operateur::opCosh(Pile & p, QString type)
         }
 }
 
+/*!
+  * \brief Opérateur tanh de Operateur.
+  * Calcul de la tangente hyperbolique d'un élément de la pile.
+  * \param p La référence de la pile.
+  * \param type Le type de constantes utilisé.
+  */
 void Operateur::opTanh(Pile & p, QString type)
 {
     if (p.getTab(p.getN() - 1)->getType() == "entier")
@@ -1713,6 +1811,11 @@ void Operateur::opTanh(Pile & p, QString type)
         }
 }
 
+/*!
+  * \brief Opérateur log de Operateur.
+  * Calcul du logarithme d'un élément de la pile.
+  * \param p La référence de la pile.
+  */
 void Operateur::opLog(Pile & p)
 {
     if (p.getTab(p.getN() - 1)->getType() == "entier")
@@ -1743,6 +1846,11 @@ void Operateur::opLog(Pile & p)
         }
 }
 
+/*!
+  * \brief Opérateur ln de Operateur.
+  * Calcul du logarithme népérien d'un élément de la pile.
+  * \param p La référence de la pile.
+  */
 void Operateur::opLn(Pile & p){
     if (p.getTab(p.getN() - 1)->getType() == "entier")
     {
@@ -1772,6 +1880,12 @@ void Operateur::opLn(Pile & p){
         }
 }
 
+/*!
+  * \brief Opérateur POW de Operateur.
+  * Calcul de la puissance d'un élément de la pile par un second élément de la pile.
+  * \param p La référence de la pile.
+  * \param mode Le type de constantes utilisé.
+  */
 void Operateur::opPOW(Pile & p, QString mode)
 {
     // entier
@@ -1848,7 +1962,7 @@ void Operateur::opPOW(Pile & p, QString mode)
          p.empiler(reel);
     }
     // rationnelle
-    if (mode == "ration")
+    if (mode == "rationnel")
     {
         Constante * ration = p.depiler();
         int val1 = ration->getNumerateur() / ration->getDenominateur();
@@ -1881,6 +1995,11 @@ void Operateur::opPOW(Pile & p, QString mode)
     }
 }
 
+/*!
+  * \brief Opérateur % de Operateur.
+  * Calcul du modulo d'un élément de la pile par un autre élément de la pile.
+  * \param p La référence de la pile.
+  */
 void Operateur::opMOD(Pile & p)
 {
     // verifier si le type est entier
@@ -1901,6 +2020,11 @@ void Operateur::opMOD(Pile & p)
     }
 }
 
+/*!
+  * \brief Opérateur SIGN de Operateur.
+  * Inversion du signe d'un élément de la pile.
+  * \param p La référence de la pile.
+  */
 void Operateur::opSIGN(Pile & p)
 {
     // entier
@@ -1977,6 +2101,11 @@ void Operateur::opSIGN(Pile & p)
     }
 }
 
+/*!
+  * \brief Opérateur INV de Operateur.
+  * Calcul de l'inverse d'un élément de la pile.
+  * \param p La référence de la pile.
+  */
 void Operateur::opINV(Pile & p)
 {
     // entier
@@ -2004,6 +2133,11 @@ void Operateur::opINV(Pile & p)
     }
 }
 
+/*!
+  * \brief Opérateur SQRT de Operateur.
+  * Calcul de la racine carré d'un élément de la pile.
+  * \param p La référence de la pile.
+  */
 void Operateur::opSQRT(Pile & p)
 {
     // entier
@@ -2031,6 +2165,11 @@ void Operateur::opSQRT(Pile & p)
     }
 }
 
+/*!
+  * \brief Opérateur SQR de Operateur.
+  * Calcul du carré d'un élément de la pile.
+  * \param p La référence de la pile.
+  */
 void Operateur::opSQR(Pile & p)
 {
     // entier
@@ -2074,6 +2213,11 @@ void Operateur::opSQR(Pile & p)
 
 }
 
+/*!
+  * \brief Opérateur CUBE de Operateur.
+  * Calcul du cube d'un élément de la pile.
+  * \param p La référence de la pile.
+  */
 void Operateur::opCUBE(Pile & p)
 {
     // entier

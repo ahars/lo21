@@ -1,3 +1,10 @@
+/*!
+ * \file mainwindow.cpp
+ * \author Jia Han & Antoine Hars
+ * \brief Déclaration des méthodes de la classe MainWindow.
+ * Ce fichier contient la déclaration des méthodes de la classe MainWindow.
+ */
+
 /* UV: LO21 - projet
  * Sujet: Calculatrice à notation polonaise inversée
  * Auteurs: Han Jia & Antoine Hars
@@ -13,7 +20,10 @@ MainWindow * MainWindow::instanceUnique = 0;
 Pile & pile = Pile::donneInstance();
 FactoryConstante fac;
 
-// Donne instance du Singleton.
+/*!
+  * \brief Méthode de MainWindow pour instancier le Design Pattern Singleton de MainWindow.
+  * Méthode appelant le constructeur de la classe MainWindow.
+  */
 MainWindow & MainWindow::donneInstance()
 {
     if (instanceUnique == 0)
@@ -21,7 +31,10 @@ MainWindow & MainWindow::donneInstance()
     return * instanceUnique;
 }
 
-// Libere instance du Singleton.
+/*!
+  * \brief Méthode de MainWindow pour détruire le Design Pattern Singleton de MainWindow.
+  * Méthode appelant le destructeur de la classe MainWindow.
+  */
 void MainWindow::libereInstance()
 {
     if (instanceUnique != 0)
@@ -32,7 +45,10 @@ void MainWindow::libereInstance()
     instanceUnique = 0;
 }
 
-// Destructeur.
+/*!
+  * \brief Destructeur de MainWindow.
+  * Destructeur de la classe MainWindow.
+  */
 MainWindow::~MainWindow()
 {
     pile.supprimerObservateurMW(this);
@@ -43,7 +59,11 @@ MainWindow::~MainWindow()
     }
 }
 
-// Constructeur.
+/*!
+  * \brief Constructeur de MainWindow.
+  * Constructeur de la classe MainWindow.
+  * \param parent correspond à l'adresse du parent.
+  */
 MainWindow::MainWindow(QWidget * parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -147,6 +167,10 @@ MainWindow::MainWindow(QWidget * parent) :
 
 }
 
+/*!
+  * \brief Méthode de MainWindow mettant à jour l'affichage de la Pile.
+  * Méthode de la classe MainWindow qui affiche tous les éléments de la Pile.
+  */
 void MainWindow::miseAJour()
 {
     //afficher dans listWidget
@@ -193,7 +217,10 @@ void MainWindow::miseAJour()
     }
 }
 
-// Appui sur le bouton ENTRER.
+/*!
+  * \brief Méthode de MainWindow qui effectue les calculs de la calculatrice.
+  * Méthode de la classe MainWindow utilisé pour le traitement des Constantes.
+  */
 void MainWindow::entrerPressed()
 {
     // Récupération de tous les éléments séparés par des espaces.
@@ -1549,7 +1576,10 @@ void MainWindow::entrerPressed()
     ui->inputLine->setText("");
 }
 
-// Évaluer une expression.
+/*!
+  * \brief Méthode de MainWindow pour évaluer une expression.
+  * Méthode de la classe MainWindow pour évaluer tous les éléments d'une expression.
+  */
 void MainWindow::evalPressed()
 {
     test = 0;
@@ -1784,20 +1814,29 @@ void MainWindow::evalPressed()
     pile.notifier();
 }
 
-// Appui sur le bouton retablir.
+/*!
+  * \brief Méthode de MainWindow pour recharger les éléments de la ligne de commande.
+  * Méthode de la classe MainWindow pour recharger la ligne de commande effacée.
+  */
 void MainWindow::retablirPressed()
 {
     ui->inputLine->setText(memoire);
 }
 
-// Appui sur le bouton annuler.
+/*!
+  * \brief Méthode de MainWindow pour effacer les éléments de la ligne de commande.
+  * Méthode de la classe MainWindow pour effacer la ligne de commande effacée.
+  */
 void MainWindow::annulerPressed()
 {
     memoire=ui->inputLine->text();
     ui->inputLine->setText("");
 }
 
-// Appui sur le bouton Clear.
+/*!
+  * \brief Méthode de MainWindow pour effacer la ligne de commande et la pile.
+  * Méthode de la classe MainWindow pour effacer les données de la calculatrice.
+  */
 void MainWindow::clearPressed()
 {
     ui->inputLine->setText("");
@@ -1806,151 +1845,226 @@ void MainWindow::clearPressed()
         pile.depiler();  //vider la pile
 }
 
-// Appui sur le bouton SWAP.
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur SWAP à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur SWAP.
+  */
 void MainWindow::swapPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "SWAP");
 }
 
-// Appui sur le bouton SUM.
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur SUM à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur SUM.
+  */
 void MainWindow::sumPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "SUM");
 }
 
-// Appui sur le bouton MEAN.
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur MEAN à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur MEAN.
+  */
 void MainWindow::meanPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "MEAN");
 }
 
-// Appui sur le bouton DUP.
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur DUP à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur DUP.
+  */
 void MainWindow::dupPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "DUP");
 }
 
-// Appui sur le bouton DROP.
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur DROP à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur DROP.
+  */
 void MainWindow::dropPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "DROP");
 }
 
-// Appui sur le bouton SPACE.
+/*!
+  * \brief Méthode de MainWindow pour ajouter un espace à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter un espace.
+  */
 void MainWindow::spacePressed()
 {
      ui->inputLine->setText(ui->inputLine->text() + " ");
 }
 
-// Appui sur le bouton $.
+/*!
+  * \brief Méthode de MainWindow pour ajouter le symbole $ à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter le symbole des complexes.
+  */
 void MainWindow::dollarPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "$");
 }
 
-// Appui sur le bouton +.
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur + à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur addition.
+  */
 void MainWindow::plusPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "+");
 }
 
-// Appui sur le bouton -.
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur - à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur soustraction.
+  */
 void MainWindow::dimPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "-");
 }
 
-// Appui sur le bouton *.
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur * à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur multiplication.
+  */
 void MainWindow::multPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "*");
 }
 
-// Appui sur le bouton /.
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur / à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur division.
+  */
 void MainWindow::divPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "/");
 }
 
-// Appui sur le bouton '.
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'apostrophe à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'apostrophe.
+  */
 void MainWindow::expressionPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "'");
 }
 
-// Appui sur le bouton 0.
+/*!
+  * \brief Méthode de MainWindow pour ajouter le chiffre 0 à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter le chiffre 0.
+  */
 void MainWindow::num0Pressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "0");
 }
 
-// Appui sur le bouton 1.
+/*!
+  * \brief Méthode de MainWindow pour ajouter le chiffre 1 à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter le chiffre 1.
+  */
 void MainWindow::num1Pressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "1");
 }
 
-// Appui sur le bouton 2.
+/*!
+  * \brief Méthode de MainWindow pour ajouter le chiffre 2 à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter le chiffre 2.
+  */
 void MainWindow::num2Pressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "2");
 }
 
-// Appui sur le bouton 3.
+/*!
+  * \brief Méthode de MainWindow pour ajouter le chiffre 9 à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter le chiffre 9.
+  */
 void MainWindow::num3Pressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "3");
 }
 
-// Appui sur le bouton 4.
+/*!
+  * \brief Méthode de MainWindow pour ajouter le chiffre 4 à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter le chiffre 4.
+  */
 void MainWindow::num4Pressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "4");
 }
 
-// Appui sur le bouton 5.
+/*!
+  * \brief Méthode de MainWindow pour ajouter le chiffre 5 à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter le chiffre 5.
+  */
 void MainWindow::num5Pressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "5");
 }
 
-// Appui sur le bouton 6.
+/*!
+  * \brief Méthode de MainWindow pour ajouter le chiffre 6 à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter le chiffre 6.
+  */
 void MainWindow::num6Pressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "6");
 }
 
-// Appui sur le bouton 7.
+/*!
+  * \brief Méthode de MainWindow pour ajouter le chiffre 7 à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter le chiffre 7.
+  */
 void MainWindow::num7Pressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "7");
 }
 
-// Appui sur le bouton 8.
+/*!
+  * \brief Méthode de MainWindow pour ajouter le chiffre 8 à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter le chiffre 8.
+  */
 void MainWindow::num8Pressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "8");
 }
 
-// Appui sur le bouton 9.
+/*!
+  * \brief Méthode de MainWindow pour ajouter le chiffre 9 à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter le chiffre 9.
+  */
 void MainWindow::num9Pressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "9");
 }
 
-// Appui sur le bouton .
+/*!
+  * \brief Méthode de MainWindow pour ajouter le point à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter le point.
+  */
 void MainWindow::pointPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + ".");
 }
 
-// Appui sur le bouton !.
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur ! à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur factoriel.
+  */
 void MainWindow::factPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "!");
 }
 
-// Appui sur le bouton ABOUT du menu.
+/*!
+  * \brief Méthode de MainWindow pour afficher les informations générales de la calculatrice.
+  * Méthode de la classe MainWindow pour afficher le nom du projet et ses auteurs.
+  */
 void MainWindow::about()
  {
     QMessageBox message;
@@ -1958,126 +2072,205 @@ void MainWindow::about()
     message.exec();
  }
 
-// Appui sur le bouton SIN.
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur sin à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur sin.
+  */
 void MainWindow::sinPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "sin");
 }
 
-// Appui sur le bouton COS.
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur cos à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur cos.
+  */
 void MainWindow::cosPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "cos");
 }
 
-// Appui sur le bouton TAN.
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur tan à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur tan.
+  */
 void MainWindow::tanPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "tan");
 }
 
-// Appui sur le bouton SINH.
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur sinh à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur sinh.
+  */
 void MainWindow::sinhPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "sinh");
 }
 
-// Appui sur le bouton COSH.
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur cosh à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur cosh.
+  */
 void MainWindow::coshPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "cosh");
 }
 
-// Appui sur le bouton TANH.
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur tanh à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur tanh.
+  */
 void MainWindow::tanhPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "tanh");
 }
 
-// Appui sur le bouton LOG.
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur log à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur log.
+  */
 void MainWindow::logPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "log");
 }
 
-// Appui sur le bouton LN.
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur ln à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur ln.
+  */
 void MainWindow::lnPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "ln");
 }
 
-// basculer en radian.
+/*!
+  * \brief Méthode de MainWindow pour spécifier que le type radian est choisi.
+  * Méthode de la classe MainWindow pour rajouter le type radian.
+  */
 void MainWindow::radSelected()
 {
     ui->RadouDeg->setText("radian");
     type = "radian";
 }
 
-// basculer en degrès.
+/*!
+  * \brief Méthode de MainWindow pour spécifier que le type degrès est choisi.
+  * Méthode de la classe MainWindow pour rajouter le type degrès.
+  */
 void MainWindow::degSelected()
 {
     ui->RadouDeg->setText("degres");
     type = "degres";
 }
 
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur CUBE à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur CUBE.
+  */
 void MainWindow::cubePressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "CUBE");
 }
 
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur SQR à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur SQR.
+  */
 void MainWindow::sqrPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "SQR");
 }
 
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur SQRT à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur SQRT.
+  */
 void MainWindow::sqrtPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "SQRT");
 }
 
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur INV à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur INV.
+  */
 void MainWindow::invPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "INV");
 }
 
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur SIGN à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur SIGN.
+  */
 void MainWindow::signPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "SIGN");
 }
 
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur % à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur modulo.
+  */
 void MainWindow::modPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "%");
 }
+
+/*!
+  * \brief Méthode de MainWindow pour ajouter l'opérateur POW à la ligne de commande.
+  * Méthode de la classe MainWindow pour rajouter l'opérateur POW.
+  */
 void MainWindow::powPressed()
 {
     ui->inputLine->setText(ui->inputLine->text() + "POW");
 }
 
+/*!
+  * \brief Méthode de MainWindow pour spécifier que le type non complexe est choisi.
+  * Méthode de la classe MainWindow pour choisir le type non complexe.
+  */
 void MainWindow::nonComplexePressed()
 {
     ui->comOuiNon->setText("non");
     com = false;
 }
 
+/*!
+  * \brief Méthode de MainWindow pour spécifier que le type complexe est choisi.
+  * Méthode de la classe MainWindow pour choisir le type complexe.
+  */
 void MainWindow::complexePressed()
 {
     ui->comOuiNon->setText("oui");
     com = true;
 }
 
+/*!
+  * \brief Méthode de MainWindow pour spécifier que le type réel est choisi.
+  * Méthode de la classe MainWindow pour choisir le type réel.
+  */
 void MainWindow::reelPressed()
 {
     ui->mode->setText("reel");
     mode = "reel";
 }
 
+/*!
+  * \brief Méthode de MainWindow pour spécifier que le type rationnel est choisi.
+  * Méthode de la classe MainWindow pour choisir le type rationnel.
+  */
 void MainWindow::rationnelPressed()
 {
     ui->mode->setText("rationnel");
     mode = "rationnel";
 }
 
+/*!
+  * \brief Méthode de MainWindow pour spécifier que le type entier est choisi.
+  * Méthode de la classe MainWindow pour choisir le type entier.
+  */
 void MainWindow::entierPressed()
 {
     ui->mode->setText("entier");

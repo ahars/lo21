@@ -1,3 +1,9 @@
+/*!
+  * \file mainwindow.h
+  * \brief Fichier header de la classe MainWindow.
+  * \author Han Jia & Antoine Hars
+  */
+
 /* UV: LO21 - projet
  * Sujet: Calculatrice à notation polonaise inversée
  * Auteurs: Han Jia & Antoine Hars
@@ -20,6 +26,10 @@ namespace Ui {
 class MainWindow;
 }
 
+/*! \class MainWindow
+  * \brief Classe permettant de créer une calculatrice.
+  * La classe MainWindow permet de créer l'interface graphique de la calculatrice et d'effectuer les opérations sur les constantes de la pile.
+  */
 class MainWindow : public QMainWindow, public Operateur, public ObservateurMW
 {
     Q_OBJECT
@@ -36,17 +46,57 @@ private:
     Ui::MainWindow * ui;
 
     // Constructeurs et Destructeurs.
+    /*!
+      * \brief Constructeur par défaut de MainWindow.
+      * Constructeur par défaut de la class MainWindow.
+      */
     MainWindow();
+
+    /*!
+      * \brief Constructeur par recopie de MainWindow.
+      * Constructeur par recopie de la classe MainWindow.
+      * \param Objet de la classe MainWindow.
+      */
     MainWindow(const MainWindow &);
+
+    /*!
+      * \brief Constructeur  de MainWindow à partir d'un QWidget
+      * Constructeur à partir d'un QWidget.
+      * \param parent correspondant à l'adresse de l'objet parent.
+      */
     explicit MainWindow(QWidget * parent = 0);
+
+    /*!
+      * \brief Destructeur de MainWindow.
+      * Destructeur de la classe MainWindow.
+      */
     virtual ~MainWindow();
+
+    /*!
+      * \brief Méthode de MainWindow pour l'opérateur = entre deux objets MainWindow.
+      * Méthode de la classe MainWindow pour la copie avec l'opérateur = entre deux objets MainWindow.
+      */
     void operator=(const MainWindow &);
 
 public:
+    /*!
+      * \brief Méthode de MainWindow du Design Pattern Singleton pour créer un objet MainWindow.
+      * Méthode de la classe MainWindow pour limiter le nombre d'instanciations de l'interface graphique.
+      * \return Objet de la classe MainWindow.
+      */
     // Singleton.
     static MainWindow & donneInstance();
+
+    /*!
+      * \brief Méthode de MainWindow du Design Pattern Singleton pour détruire un objet MainWindow.
+      * Méthode de la classe MainWindow pour détruire une instanciation de l'interface graphique.
+      */
     static void libereInstance();
 
+    /*!
+      * \brief Méthode de MainWindow du Design Pattern Observer entre Pile et MainWindow.
+      * Méthode de la classe MainWindow pour afficher tous les changements de la Pile.
+      */
     // Observer.
     void miseAJour();
 
