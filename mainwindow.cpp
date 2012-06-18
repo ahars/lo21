@@ -178,7 +178,8 @@ void MainWindow::miseAJour()
 {
     //afficher dans listWidget
     ui->listWidget->clear();
-
+    ui->listWidget->addItem("ff");
+    ui->listWidget->addItem(QString::number(pile.getTab(pile.getN() - 1)->getEntier(), 10));
     for (int j = pile.getN() - 1; j >= 0; j--)
     {
         if (pile.getTab(j)->getType() == "entier")
@@ -276,7 +277,7 @@ void MainWindow::entrerPressed()
             if (comp.count() > 1)
             {
                 // L'option complexe est à non -> message d'erreur.
-                if (!com)
+                if (com == 0)
                 {
                     QMessageBox message;
                     message.setText("L'utilisation de complexes n'est pas autorisee.");
@@ -473,7 +474,7 @@ void MainWindow::entrerPressed()
                 if (list[i] == "SWAP")
                 {
                     // Le SWAP requiert 2 entiers présents dans la pile.
-                    if ( pile.getN() > 1 && pile.getTab(pile.getN() - 1)->getType() == "entier" &&
+                    if (pile.getN() > 1 && pile.getTab(pile.getN() - 1)->getType() == "entier" &&
                          pile.getTab(pile.getN() - 2)->getType() == "entier")
                     {
                         int val1 = pile.getTab(pile.getN() - 1)->getEntier();
@@ -991,7 +992,7 @@ void MainWindow::entrerPressed()
                 // Opérateur +.
                 if (list[i] == "+")
                 {
-                    if (pile.getN() > 1)
+                    if (pile.getN() > 0)
                     {
                         QString exp;
 

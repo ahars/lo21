@@ -114,14 +114,14 @@ public:
       * Fonction qui teste le nombre de places libres dans la pile.
       * \return Boolean true si la pile est pleine, sinon false.
       */
-    int pilePleine();
+    bool pilePleine();
 
     /*!
       * \brief Fonction qui teste le cas d'une pile vide.
       * Fonction qui teste la présence d'un élément dans la pile.
       * \return Boolean true si la pile est vide sinon false.
       */
-    int pileVide();
+    bool pileVide();
 
     /*!
       * \brief Fonction d'empilement d'une constante dans la Pile.
